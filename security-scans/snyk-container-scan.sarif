@@ -6,748 +6,26 @@
       "tool": {
         "driver": {
           "name": "Snyk Container",
-          "semanticVersion": "1.1307.0",
-          "version": "1.1307.0",
+          "semanticVersion": "1.1308.2",
+          "version": "1.1308.2",
           "informationUri": "https://docs.snyk.io/",
           "properties": {
             "artifactsScanned": 77
           },
-          "rules": [
-            {
-              "id": "SNYK-ALPINE324-OPENSSL-19257375",
-              "shortDescription": {
-                "text": "Low severity - CVE-2026-14456 vulnerability in openssl"
-              },
-              "fullDescription": {
-                "text": "(CVE-2026-14456) openssl/openssl@3.5.7-r0"
-              },
-              "help": {
-                "text": "",
-                "markdown": "## NVD Description\n**_Note:_** _Versions mentioned in the description apply only to the upstream `openssl` package and not the `openssl` package as distributed by `Alpine`._\n_See `How to fix?` for `Alpine:3.24` relevant fixed versions and status._\n\nIssue summary: When an OpenSSL QUIC server (Listener SSL object) processes\nvalid QUIC Initial packets for unknown destination connection IDs, it\ncan allocate and queue new incoming channels without enforcing any limit.\n\nImpact summary: A remote peer that can make many Initial packets reach the\nserver listener faster than the application accepts connections, can cause the\nmemory allocated to store the per-channel state to grow without any limits,\npotentially making the QUIC listener unavailable and causing Denial of Service.\n\nCWE: CWE-770: Allocation of Resources Without Limits or Throttling\n\nDescription: The function that handles inbound QUIC packets uses\nConnection-Id from the packet header to find an existing connection\n(QUIC channel). If no existing connection is found and the packet\ntype is INITIAL, the function treats the packet as a new connection. It\nallocates a new channel object and inserts it into a queue where it\nwaits to be accepted by the local application with SSL_accept(3ossl).\nThe memory occupied by these initial channel objects may grow\nwithout bounds if the application is not able to call SSL_accept()\nfrequently enough to serve these inbound connection requests.\n\nThe issue is present since OpenSSL 3.5 when the QUIC server implementation\nwas added.\n\nThe fix introduces a limit for pending connections. The default limit is set\nto 256 pending connections (waiting to be accepted by the local application).\nApplications may change the default by calling SSL_set_value_uint(3ossl).\n\nFIPS impact: no\nThe FIPS module is not affected as the QUIC implementation is outside of\nthe OpenSSL FIPS module boundary.\n## Remediation\nUpgrade `Alpine:3.24` `openssl` to version 3.5.8-r0 or higher.\n## References\n- [https://github.com/openssl/openssl/commit/08e7756c3900bcfd77a720e7b74e27d6e4ed01a9](https://github.com/openssl/openssl/commit/08e7756c3900bcfd77a720e7b74e27d6e4ed01a9)\n- [https://github.com/openssl/openssl/commit/4084152e040329ca0194c4c1750b9b46d00a5b6b](https://github.com/openssl/openssl/commit/4084152e040329ca0194c4c1750b9b46d00a5b6b)\n- [https://github.com/openssl/openssl/commit/f2f1465f2d2e5c61dfeac4d20fd093797d821139](https://github.com/openssl/openssl/commit/f2f1465f2d2e5c61dfeac4d20fd093797d821139)\n- [https://openssl-library.org/news/secadv/20260813.txt](https://openssl-library.org/news/secadv/20260813.txt)\n- [http://www.openwall.com/lists/oss-security/2026/08/13/4](http://www.openwall.com/lists/oss-security/2026/08/13/4)\n"
-              },
-              "defaultConfiguration": {
-                "level": "warning"
-              },
-              "properties": {
-                "tags": [
-                  "security",
-                  "apk"
-                ],
-                "cvssv3_baseScore": null,
-                "security-severity": "null"
-              }
-            },
-            {
-              "id": "SNYK-ALPINE324-OPENSSL-19257376",
-              "shortDescription": {
-                "text": "Low severity - CVE-2026-14457 vulnerability in openssl"
-              },
-              "fullDescription": {
-                "text": "(CVE-2026-14457) openssl/openssl@3.5.7-r0"
-              },
-              "help": {
-                "text": "",
-                "markdown": "## NVD Description\n**_Note:_** _Versions mentioned in the description apply only to the upstream `openssl` package and not the `openssl` package as distributed by `Alpine`._\n_See `How to fix?` for `Alpine:3.24` relevant fixed versions and status._\n\nIssue summary: In a server or client configuration with RFC7250 Raw Public Keys (RPKs)\nenabled, and only the private key (with no associated certificate) configured locally,\na NULL pointer dereference may occur when the remote peer solicits raw public keys and\nalso sends the typically omitted &#34;signature_algorithms_cert&#34; TLS extension.\n\nImpact summary: The impact is limited to a possible Denial of Service as a result of\nan application abort, no data disclosure or remote command execution are possible.\n\nCWE: CWE-476: NULL Pointer Dereference\n\nDescription: While a passing comment in sample code in the documentation suggests\nthat key-only RPK configurations are supported, the best-practice RPK configuration\nis to always configure a corresponding certificate (possibly self-signed or\nsigned by any convenient CA).\n\nWhen the private key is configured along with a matching certificate, the\n&#34;signature_algorithms_cert&#34; extension is handled reliably even without the\nfix, and peer clients or servers that don&#39;t support raw public keys may be\nable to complete a TLS connection by pinning or verifying the corresponding\ncertificate or its public key.\n\nDeployments that prefer to configure just a private key with no certificate\nneed to upgrade to an updated release as noted below.\n\nFIPS impact: no\n\nNo FIPS modules are affected by this issue, as the SSL protocol implementation\nis outside the OpenSSL FIPS module boundary.\n## Remediation\nUpgrade `Alpine:3.24` `openssl` to version 3.5.8-r0 or higher.\n## References\n- [https://github.com/openssl/openssl/commit/1e8c398db67404babd3e5af999bb6bd86f720c76](https://github.com/openssl/openssl/commit/1e8c398db67404babd3e5af999bb6bd86f720c76)\n- [https://github.com/openssl/openssl/commit/581aaa0f0a35d214740f0fe1f5283ec41f1212e1](https://github.com/openssl/openssl/commit/581aaa0f0a35d214740f0fe1f5283ec41f1212e1)\n- [https://github.com/openssl/openssl/commit/d0af20478688a6aa2f59d61caa3f82136b181d7f](https://github.com/openssl/openssl/commit/d0af20478688a6aa2f59d61caa3f82136b181d7f)\n- [https://github.com/openssl/openssl/commit/dad836b071da6579510c968615848ba03cac593b](https://github.com/openssl/openssl/commit/dad836b071da6579510c968615848ba03cac593b)\n- [https://openssl-library.org/news/secadv/20260825.txt](https://openssl-library.org/news/secadv/20260825.txt)\n"
-              },
-              "defaultConfiguration": {
-                "level": "warning"
-              },
-              "properties": {
-                "tags": [
-                  "security",
-                  "apk"
-                ],
-                "cvssv3_baseScore": null,
-                "security-severity": "null"
-              }
-            },
-            {
-              "id": "SNYK-ALPINE324-OPENSSL-19257380",
-              "shortDescription": {
-                "text": "Low severity - CVE-2026-54874 vulnerability in openssl"
-              },
-              "fullDescription": {
-                "text": "(CVE-2026-54874) openssl/openssl@3.5.7-r0"
-              },
-              "help": {
-                "text": "",
-                "markdown": "## NVD Description\n**_Note:_** _Versions mentioned in the description apply only to the upstream `openssl` package and not the `openssl` package as distributed by `Alpine`._\n_See `How to fix?` for `Alpine:3.24` relevant fixed versions and status._\n\nIssue summary: Receiving a DTLS record for a future epoch while a handshake\nis in progress causes OpenSSL to buffer far more memory than the record\nitself requires.\n\nImpact summary: A peer can use a small amount of network traffic to make an\nOpenSSL DTLS endpoint retain a disproportionately large amount of memory,\nwhich may lead to a Denial of Service.\n\nCWE: CWE-405: Asymmetric Resource Consumption (Amplification)\n\nDescription: While a DTLS handshake is in progress, a peer may legitimately\nhave already moved on to the next epoch (for example, having sent its\nChangeCipherSpec and Finished messages) before the local endpoint has\nprocessed the same transition, typically because of reordering on the\nunderlying UDP transport. OpenSSL buffers such early records so that they\ncan be processed once the local endpoint catches up.\n\nBuffering a record currently retains the entire read buffer it arrived in,\nwhich is sized to hold the largest possible DTLS record (around 16\nkilobytes), rather than just the bytes that make up the record itself. Up\nto 100 such records may be buffered per connection. As a result, a peer\nthat sends a stream of small forged records claiming to belong to the next\nepoch can cause an OpenSSL DTLS endpoint to retain around 1.7 megabytes of\nmemory, despite sending only a small fraction of that amount of data over\nthe network.\n\nAn attacker therefore gains a memory amplification factor of around 1200,\nand can multiply the effect across as many associations as it is able to\nopen, making this a remote memory exhaustion Denial of Service risk for\nDTLS servers. Since the memory retained per connection remains bounded,\nand any limit an application already places on the number of concurrent\nassociations also bounds the total exposure, this issue has been assessed\nas Low severity.\n\nFIPS impact: no\n\nNo FIPS modules are affected by this issue as the affected code is outside\nthe OpenSSL FIPS module boundary.\n\nOpenSSL 4.0, 3.6, 3.5, 3.4, 3.0, 1.1.1 and 1.0.2 are vulnerable to this\nissue.\n\nOpenSSL 4.0 users should upgrade to OpenSSL 4.0.2.\nOpenSSL 3.6 users should upgrade to OpenSSL 3.6.4.\nOpenSSL 3.5 users should upgrade to OpenSSL 3.5.8.\nOpenSSL 3.4 users should upgrade to OpenSSL 3.4.7.\nOpenSSL 3.0 users should upgrade to OpenSSL 3.0.22.\n\nPremium support customers only:\nOpenSSL 1.1.1 users should upgrade to OpenSSL 1.1.1zi\nOpenSSL 1.0.2 users should upgrade to OpenSSL 1.0.2zr\n\nThis issue was reported on 18 May 2026 by Amazon Web Services.\nThe fix has been developed by Matt Caswell.\n\n-- cut (non-publishing metadata for internal use) --\nReported by: Amazon Web Services\nFixed by: Matt Caswell\n## Remediation\nUpgrade `Alpine:3.24` `openssl` to version 3.5.8-r0 or higher.\n## References\n- [https://github.com/openssl/openssl/commit/4808b5d64176451f3d93d87d0ac9c81a9b13fb23](https://github.com/openssl/openssl/commit/4808b5d64176451f3d93d87d0ac9c81a9b13fb23)\n- [https://github.com/openssl/openssl/commit/7110cb2f75806d0bf809eb2f90790d477900be40](https://github.com/openssl/openssl/commit/7110cb2f75806d0bf809eb2f90790d477900be40)\n- [https://github.com/openssl/openssl/commit/a0c8ec557d9cac078f032d76cdf684fe743eb382](https://github.com/openssl/openssl/commit/a0c8ec557d9cac078f032d76cdf684fe743eb382)\n- [https://github.com/openssl/openssl/commit/cc0c6710917cd5eec001b297355d2ba723505107](https://github.com/openssl/openssl/commit/cc0c6710917cd5eec001b297355d2ba723505107)\n- [https://github.com/openssl/openssl/commit/f52ffc11b90737ac89083909618dc2e1f42c561c](https://github.com/openssl/openssl/commit/f52ffc11b90737ac89083909618dc2e1f42c561c)\n- [https://openssl-library.org/news/secadv/20260825.txt](https://openssl-library.org/news/secadv/20260825.txt)\n"
-              },
-              "defaultConfiguration": {
-                "level": "warning"
-              },
-              "properties": {
-                "tags": [
-                  "security",
-                  "apk"
-                ],
-                "cvssv3_baseScore": null,
-                "security-severity": "null"
-              }
-            },
-            {
-              "id": "SNYK-ALPINE324-OPENSSL-19257381",
-              "shortDescription": {
-                "text": "Low severity - CVE-2026-63075 vulnerability in openssl"
-              },
-              "fullDescription": {
-                "text": "(CVE-2026-63075) openssl/openssl@3.5.7-r0"
-              },
-              "help": {
-                "text": "",
-                "markdown": "## NVD Description\n**_Note:_** _Versions mentioned in the description apply only to the upstream `openssl` package and not the `openssl` package as distributed by `Alpine`._\n_See `How to fix?` for `Alpine:3.24` relevant fixed versions and status._\n\nIssue summary: When OpenSSL processes QUIC traffic from a peer that repeatedly\nsends ack-eliciting packets while not acknowledging ACK-only responses, the\nQUIC stack can retain ACK-only packet metadata for the lifetime of the\nconnection.\n\nImpact summary: A remote peer that can complete a QUIC handshake can\ncause connection-scoped memory growth which may lead to Denial of Service\nthrough memory exhaustion, especially with sustained traffic or many concurrent\nQUIC connections.\n\nCWE: CWE-770: Allocation of Resources Without Limits or Throttling\n\nDescription: When the OpenSSL QUIC stack sends an ACK-only packet,\nthere is no requirement by the QUIC protocol that the peer will acknowledge\nthat ACK-only packet (i.e. it is itself not ack-eliciting). However, the OpenSSL\nimplementation stores the metadata about the ACK frames regardless.\nIn and of itself that&#39;s ok, but if a malicious peer establishes a connection, and\nthen drives the connection such that ACK-only packets are forced from the \nOpenSSL implementation peer (i.e., by sending numerous PING frames),\nand then withholding any subsequent acks for ack-eliciting data, like\nlegitimate data, said malicious peer can force inappropriate memory growth\non the OpenSSL peer, potentially leading to a Denial of Service.\n\nThe fix is to ensure that we account for the transmission of the ACK-only\npacket in the packet histories high and low watermark without actually storing\nthe ACK-only packet metadata itself.\n\nFIPS impact: no\nThe OpenSSL FIPS module is not affected as the QUIC code is\noutside the FIPS module boundary.\n## Remediation\nUpgrade `Alpine:3.24` `openssl` to version 3.5.8-r0 or higher.\n## References\n- [https://github.com/openssl/openssl/commit/7308946576b12e64b8be53bcf0a120354b2b42bc](https://github.com/openssl/openssl/commit/7308946576b12e64b8be53bcf0a120354b2b42bc)\n- [https://github.com/openssl/openssl/commit/7c98d79738549df92868e7dd9be4bbf061eed709](https://github.com/openssl/openssl/commit/7c98d79738549df92868e7dd9be4bbf061eed709)\n- [https://github.com/openssl/openssl/commit/bf84721c2548351176e367e6de505792f0118dc6](https://github.com/openssl/openssl/commit/bf84721c2548351176e367e6de505792f0118dc6)\n- [https://github.com/openssl/openssl/commit/c902e5f16d6a9e130e96d3ca6d8f64d71652e393](https://github.com/openssl/openssl/commit/c902e5f16d6a9e130e96d3ca6d8f64d71652e393)\n- [https://openssl-library.org/news/secadv/20260825.txt](https://openssl-library.org/news/secadv/20260825.txt)\n"
-              },
-              "defaultConfiguration": {
-                "level": "warning"
-              },
-              "properties": {
-                "tags": [
-                  "security",
-                  "apk"
-                ],
-                "cvssv3_baseScore": null,
-                "security-severity": "null"
-              }
-            },
-            {
-              "id": "SNYK-ALPINE324-OPENSSL-19257382",
-              "shortDescription": {
-                "text": "Low severity - CVE-2026-18798 vulnerability in openssl"
-              },
-              "fullDescription": {
-                "text": "(CVE-2026-18798) openssl/openssl@3.5.7-r0"
-              },
-              "help": {
-                "text": "",
-                "markdown": "## NVD Description\n**_Note:_** _Versions mentioned in the description apply only to the upstream `openssl` package and not the `openssl` package as distributed by `Alpine`._\n_See `How to fix?` for `Alpine:3.24` relevant fixed versions and status._\n\nIssue summary: QUIC server may double free QRX (QUIC record layer RX) object\nwhen channel creation fails for initial packet.\n\nImpact summary: Double free leads to heap corruption, which typically results in \ntermination of QUIC server process, leading to Denial of Service. There is so\nfar no evidence that this double free is exploitable for remote code execution,\nthus it is considered highly improbable.\n\nCWE: CWE-415: Double Free\n\nDescription: In order to validate initial packet, OpenSSL QUIC stack default\npacket handler (port_default_packet_handler()) creates a so-called QRX object.\nIf the initial packet validates successfully with QRX object, the default packet\nhandler proceeds to channel (connection object) creation. The QRX object used\nfor packet validation is passed to port_bind_channel(), so it becomes part of\nthe newly created connection. If port_bind_channel() fails, then it also frees\nthe QRX object. Once port_bind_channel() returns, the port_default_packet_handler()\ndetects the failure and proceeds to the error branch, where the same QRX object is\nfreed for the second time.\n\nThe failure in port_bind_channel() function can be induced with a relatively\nlow effort by a malformed (non RFC 9000 compliant) INITIAL packet. If the packet\ncarries DCID (destination connection ID) which is shorter than 8 bytes, then\nport_bind_channel() jumps to the error path after ossl_quic_lcidm_enrol_odcid()\ndetects that the DCID has invalid length.\n\nFIPS impact: no\nThe FIPS module is not affected, as the QUIC implementation is outside of\nthe OpenSSL FIPS module boundary.\n## Remediation\nUpgrade `Alpine:3.24` `openssl` to version 3.5.8-r0 or higher.\n## References\n- [https://github.com/openssl/openssl/commit/70cebd74d3592f5272945501b58a60374c4e13af](https://github.com/openssl/openssl/commit/70cebd74d3592f5272945501b58a60374c4e13af)\n- [https://github.com/openssl/openssl/commit/967582d5037f01a26b6d19beae19af62a1b15c3c](https://github.com/openssl/openssl/commit/967582d5037f01a26b6d19beae19af62a1b15c3c)\n- [https://github.com/openssl/openssl/commit/a14a1deac403522fbeafabcb198503cf6caa7dc4](https://github.com/openssl/openssl/commit/a14a1deac403522fbeafabcb198503cf6caa7dc4)\n- [https://openssl-library.org/news/secadv/20260825.txt](https://openssl-library.org/news/secadv/20260825.txt)\n"
-              },
-              "defaultConfiguration": {
-                "level": "warning"
-              },
-              "properties": {
-                "tags": [
-                  "security",
-                  "apk"
-                ],
-                "cvssv3_baseScore": null,
-                "security-severity": "null"
-              }
-            },
-            {
-              "id": "SNYK-ALPINE324-OPENSSL-19257384",
-              "shortDescription": {
-                "text": "Low severity - CVE-2026-63073 vulnerability in openssl"
-              },
-              "fullDescription": {
-                "text": "(CVE-2026-63073) openssl/openssl@3.5.7-r0"
-              },
-              "help": {
-                "text": "",
-                "markdown": "## NVD Description\n**_Note:_** _Versions mentioned in the description apply only to the upstream `openssl` package and not the `openssl` package as distributed by `Alpine`._\n_See `How to fix?` for `Alpine:3.24` relevant fixed versions and status._\n\nIssue summary: OpenSSL CMP response validation passed an unexpected response\nsender distinguished name directly as the format string to `ERR_raise_data()`.\n\nImpact summary: A malicious or intercepted CMP endpoint can crash a CMP client\nthat enforces an expected sender or uses a pinned server certificate whose\nsubject becomes the default expected sender.\n\nCWE: CWE-134 (Use of Externally-Controlled Format String)\n\nDescription: When validating a received CMP message, ossl_cmp_msg_check_update()\nconverts the peer-supplied sender distinguished name with X509_NAME_oneline()\nand passes it directly as the format argument to ERR_raise_data(). Percent\ncharacters survive the conversion, so a sender DN such as &#34;CN=%s%n&#34; reaches\nBIO_vsnprintf() as an attacker-controlled format string with no matching variadic\narguments. This path is only reached when the caller configures an expected\nsender or pins a server certificate, which is the normal configuration for a\nCMP client validating server responses.\n\nSince the attacker controls the format string but none of the variadic\narguments, such specifiers as %s and %n dereference or write through unrelated\nstack contents and crash the client. The reliable consequence is a denial of\nservice, when the response comes from a malicious or intercepted CMP endpoint.\nThere is no controlled memory write, arbitrary-address read, or reliable path\nto remote code execution.\n\nFIPS impact: no\n\nNo FIPS modules are affected by this issue, as the CMP protocol\nimplementation is outside the OpenSSL FIPS module boundary.\n## Remediation\nUpgrade `Alpine:3.24` `openssl` to version 3.5.8-r0 or higher.\n## References\n- [https://github.com/openssl/openssl/commit/0cc20b322639919aa423e90799d9a57c3b4b76ca](https://github.com/openssl/openssl/commit/0cc20b322639919aa423e90799d9a57c3b4b76ca)\n- [https://github.com/openssl/openssl/commit/6a0acc072b4d37a7cac1252a29c1ce1f00c5ec29](https://github.com/openssl/openssl/commit/6a0acc072b4d37a7cac1252a29c1ce1f00c5ec29)\n- [https://github.com/openssl/openssl/commit/7eb2e3ec9d1d4f35c8022fccd4b03398b3f33e21](https://github.com/openssl/openssl/commit/7eb2e3ec9d1d4f35c8022fccd4b03398b3f33e21)\n- [https://github.com/openssl/openssl/commit/a7e5a6eea8fd3ccca6b6fbba031a5fbf8a3d93b4](https://github.com/openssl/openssl/commit/a7e5a6eea8fd3ccca6b6fbba031a5fbf8a3d93b4)\n- [https://openssl-library.org/news/secadv/20260825.txt](https://openssl-library.org/news/secadv/20260825.txt)\n"
-              },
-              "defaultConfiguration": {
-                "level": "warning"
-              },
-              "properties": {
-                "tags": [
-                  "security",
-                  "apk"
-                ],
-                "cvssv3_baseScore": null,
-                "security-severity": "null"
-              }
-            },
-            {
-              "id": "SNYK-ALPINE324-OPENSSL-19257388",
-              "shortDescription": {
-                "text": "Low severity - CVE-2026-75803 vulnerability in openssl"
-              },
-              "fullDescription": {
-                "text": "(CVE-2026-75803) openssl/openssl@3.5.7-r0"
-              },
-              "help": {
-                "text": "",
-                "markdown": "## NVD Description\n**_Note:_** _Versions mentioned in the description apply only to the upstream `openssl` package and not the `openssl` package as distributed by `Alpine`._\n_See `How to fix?` for `Alpine:3.24` relevant fixed versions and status._\n\nIssue summary: ChaCha20-Poly1305 and AES-OCB decryption with an empty\nciphertext can report success without verifying the supplied authentication\ntag when the operation is finalized by calling the EVP_Cipher() function.\n\nImpact summary: Applications calling EVP_Cipher() on an empty ciphertext and\nexpecting the call to check the AEAD tag may accept forged messages.\n\nCWE: CWE-354 (Improper Validation of Integrity Check Value)\n\nDescription: The EVP_Cipher() API call for AEAD ciphers behaves like a one\nshot encryption and decryption call. It also verifies the AEAD tag after the\ndecryption operation. However for AES-OCB and ChaCha20-Poly1305 ciphers\nit skipped the AEAD tag verification when an empty ciphertext was passed to\nthe function. The callers of this function might believe that a successful\nreturn indicates a valid AEAD tag for these ciphers, even when that has not\ntruly been validated in this case.\n\nFIPS impact: no\nThe FIPS modules in 4.0, 3.6, 3.5, 3.4, and 3.0 are not affected by this CVE\nas the affected algorithms are not FIPS approved and thus not implemented\nin the FIPS module.\n## Remediation\nUpgrade `Alpine:3.24` `openssl` to version 3.5.8-r0 or higher.\n## References\n- [https://github.com/openssl/openssl/commit/119ab9555dc62275bbd71f6f49529b1a44feba42](https://github.com/openssl/openssl/commit/119ab9555dc62275bbd71f6f49529b1a44feba42)\n- [https://github.com/openssl/openssl/commit/3621257986e27e540bf96a11570929a6e5a9e05b](https://github.com/openssl/openssl/commit/3621257986e27e540bf96a11570929a6e5a9e05b)\n- [https://github.com/openssl/openssl/commit/6c7aa6f8f6449b7fe0137ee8be65fcd239bd7d6a](https://github.com/openssl/openssl/commit/6c7aa6f8f6449b7fe0137ee8be65fcd239bd7d6a)\n- [https://github.com/openssl/openssl/commit/bdeb0cd994d915342787f117ee75044f0dc36f34](https://github.com/openssl/openssl/commit/bdeb0cd994d915342787f117ee75044f0dc36f34)\n- [https://github.com/openssl/openssl/commit/bf95f5f772e9362f87b25cfa2f8cb15d984865b9](https://github.com/openssl/openssl/commit/bf95f5f772e9362f87b25cfa2f8cb15d984865b9)\n- [https://openssl-library.org/news/secadv/20260825.txt](https://openssl-library.org/news/secadv/20260825.txt)\n"
-              },
-              "defaultConfiguration": {
-                "level": "warning"
-              },
-              "properties": {
-                "tags": [
-                  "security",
-                  "apk"
-                ],
-                "cvssv3_baseScore": null,
-                "security-severity": "null"
-              }
-            },
-            {
-              "id": "SNYK-ALPINE324-OPENSSL-19257390",
-              "shortDescription": {
-                "text": "Low severity - CVE-2026-63074 vulnerability in openssl"
-              },
-              "fullDescription": {
-                "text": "(CVE-2026-63074) openssl/openssl@3.5.7-r0"
-              },
-              "help": {
-                "text": "",
-                "markdown": "## NVD Description\n**_Note:_** _Versions mentioned in the description apply only to the upstream `openssl` package and not the `openssl` package as distributed by `Alpine`._\n_See `How to fix?` for `Alpine:3.24` relevant fixed versions and status._\n\nIssue summary: The OpenSSL Certificate Management Protocol (CMP) caches\nadditional certificates (extraCerts) sent in a CMP message, but never expunges\nthem (for instance if they are invalid).  If a server reuses an OSSL_CMP_CTX\nfrequently, this cache of extraCerts may grow unboundedly, and a malicious\nclient may flood a CMP server with requests driving this growth.\n\nImpact summary: Users utilizing a CMP server that reuses a single OSSL_CMP_CTX\nfor the lifetime of a server process may observe unbounded memory growth in the\nevent a malicious client repeatedly sends requests containing unique extra\ncertificates, which may lead to OOM conditions.\n\nCWE: CWE-770: Allocation of Resources Without Limits or Throttling\n\nDescription: If a remote user sends CMP messages to a server with a list of\nextraCerts and the message is rejected, the extraCerts from the message remains\nin the server contexts untrusted certificate stack.  This exposes servers with\nlong lived ctx objects to Denial of Service attacks in which an attacker sends\nmessages intending to be rejected with a large list of additional certificates\nrepeatedly, forcing the server to store them indefinitely.\n   \nThe issue was fixed by removing the added extra certs if the message is\nrejected, using the same method as when the context is configured to not do\ncaching at all.\n\nFIPS impact: no\nAs the CMP code lives outside the FIPS module boundary, no FIPS\nmodules are affected by this CVE.\n## Remediation\nUpgrade `Alpine:3.24` `openssl` to version 3.5.8-r0 or higher.\n## References\n- [https://github.com/openssl/openssl/commit/01e567978a55fba18142a230380c31296049fae7](https://github.com/openssl/openssl/commit/01e567978a55fba18142a230380c31296049fae7)\n- [https://github.com/openssl/openssl/commit/21a5d9658b0c66daace60e10ea18ff32a448de9f](https://github.com/openssl/openssl/commit/21a5d9658b0c66daace60e10ea18ff32a448de9f)\n- [https://github.com/openssl/openssl/commit/74ae7f6df47a5767c1010b88c47507dfc5b32c46](https://github.com/openssl/openssl/commit/74ae7f6df47a5767c1010b88c47507dfc5b32c46)\n- [https://github.com/openssl/openssl/commit/75360af9650d4e0c82ba0050c5c9912cd79e54af](https://github.com/openssl/openssl/commit/75360af9650d4e0c82ba0050c5c9912cd79e54af)\n- [https://github.com/openssl/openssl/commit/f636f9ca0fa1bae5b42f9e787f025c96fb09c43a](https://github.com/openssl/openssl/commit/f636f9ca0fa1bae5b42f9e787f025c96fb09c43a)\n- [https://openssl-library.org/news/secadv/20260825.txt](https://openssl-library.org/news/secadv/20260825.txt)\n"
-              },
-              "defaultConfiguration": {
-                "level": "warning"
-              },
-              "properties": {
-                "tags": [
-                  "security",
-                  "apk"
-                ],
-                "cvssv3_baseScore": null,
-                "security-severity": "null"
-              }
-            },
-            {
-              "id": "SNYK-ALPINE324-OPENSSL-19257391",
-              "shortDescription": {
-                "text": "Low severity - CVE-2026-63072 vulnerability in openssl"
-              },
-              "fullDescription": {
-                "text": "(CVE-2026-63072) openssl/openssl@3.5.7-r0"
-              },
-              "help": {
-                "text": "",
-                "markdown": "## NVD Description\n**_Note:_** _Versions mentioned in the description apply only to the upstream `openssl` package and not the `openssl` package as distributed by `Alpine`._\n_See `How to fix?` for `Alpine:3.24` relevant fixed versions and status._\n\nIssue summary: OpenSSL CMS decryption sizes the key-unwrap output buffer based\non querying the unwrapped key size, but the AES-WRAP-PAD unwrap primitive\ncan write and cleanse more bytes than that query reports, causing an 8-byte\nout-of-bounds heap write.\n\nImpact summary: An attacker who supplies a crafted CMS message can trigger a\ndeterministic 8-byte out-of-bounds heap write when the victim decrypts it\nwith CMS_decrypt(), corrupting the heap and typically resulting in a Denial\nof Service.\n\nCWE: CWE-787: Out-of-bounds Write\n\nDescription: The key-wrap OID is potentially attacker-controlled on the wire.\nCMS unwrapping allows both id-aesNNN-wrap-pad and id-aesNNN-wrap ciphers.\nAn attacker can take a legitimate message and change a single OID byte to\nselect the padded variant while leaving the message otherwise valid. Since\nthe unwrap key is derived from the recipient&#39;s private operation (ECDH key\nagreement or ML-KEM decapsulation), the RFC 5649 integrity check cannot\npass, and the decryption fails with integrity failure.\n\nThe write is a fixed-size (8-byte), fixed-value (zero) heap overflow\nimmediately past the allocation, requires no special configuration, and is\nreachable from the public CMS_decrypt() function. The consequence is\na heap corruption leading to a Denial of Service. The fix in the CMS code\nsizes the unwrap output buffer for the worst case so a failed unwrap cannot\nwrite past the allocation.\n\nFIPS impact: no\n\nAs the CMS code lives outside the FIPS module boundary, no FIPS\nmodules are affected by this CVE.\n## Remediation\nUpgrade `Alpine:3.24` `openssl` to version 3.5.8-r0 or higher.\n## References\n- [https://github.com/openssl/openssl/commit/2a3dac874c8057c1f0186849bf1ede1ae7b6b756](https://github.com/openssl/openssl/commit/2a3dac874c8057c1f0186849bf1ede1ae7b6b756)\n- [https://github.com/openssl/openssl/commit/87784ad619af36b8807c2044b3940006fccc1e42](https://github.com/openssl/openssl/commit/87784ad619af36b8807c2044b3940006fccc1e42)\n- [https://github.com/openssl/openssl/commit/9530a5fd1aacaeccdced4478ea2340a480613335](https://github.com/openssl/openssl/commit/9530a5fd1aacaeccdced4478ea2340a480613335)\n- [https://github.com/openssl/openssl/commit/9ec2f6d2ae2bcad907cf7ee38584855bafe4979a](https://github.com/openssl/openssl/commit/9ec2f6d2ae2bcad907cf7ee38584855bafe4979a)\n- [https://github.com/openssl/openssl/commit/a0c8ec557d9cac078f032d76cdf684fe743eb382](https://github.com/openssl/openssl/commit/a0c8ec557d9cac078f032d76cdf684fe743eb382)\n- [https://openssl-library.org/news/secadv/20260825.txt](https://openssl-library.org/news/secadv/20260825.txt)\n"
-              },
-              "defaultConfiguration": {
-                "level": "warning"
-              },
-              "properties": {
-                "tags": [
-                  "security",
-                  "apk"
-                ],
-                "cvssv3_baseScore": null,
-                "security-severity": "null"
-              }
-            },
-            {
-              "id": "SNYK-ALPINE324-OPENSSL-19257392",
-              "shortDescription": {
-                "text": "Low severity - CVE-2026-63076 vulnerability in openssl"
-              },
-              "fullDescription": {
-                "text": "(CVE-2026-63076) openssl/openssl@3.5.7-r0"
-              },
-              "help": {
-                "text": "",
-                "markdown": "## NVD Description\n**_Note:_** _Versions mentioned in the description apply only to the upstream `openssl` package and not the `openssl` package as distributed by `Alpine`._\n_See `How to fix?` for `Alpine:3.24` relevant fixed versions and status._\n\nIssue summary: OpenSSL CMP password based protection verification only\nchecks whether the protectionAlg parameter was not NULL and not its\nASN.1 type, before treating it as a PBMParameter. A crafted message can\ncontain a parameter of a different type, which is then dereferenced as an\ninvalid pointer.\n\nImpact summary: A remote, unauthenticated attacker can crash an application\nacting as a CMP server that accepts PBM-protected messages, or a CMP client\ntalking to a malicious or intercepted CMP server, resulting in a Denial of\nService.\n\nCWE: CWE-476: NULL Pointer Dereference\n\nDescription: When verifying the password-based MAC protection of a CMP\nmessage, OpenSSL library reads the protectionAlg algorithm parameter with\nX509_ALGOR_get0(), which returns both the parameter type and its value\npointer. The value is then cast to an ASN1_STRING and treated as the\nexpected PBMParameter after only checking that pointer is not NULL. The\nparameter type returned by X509_ALGOR_get0() was never consulted.\n\nThis happens during protection verification, before any MAC is computed, so\nno knowledge of the PBM shared secret is required; the only precondition is\nthat PBM verification is reachable. On the server side this is reached from\nOSSL_CMP_SRV_process_request() for any application that stands up a CMP\nserver accepting PBM-protected messages, and on the client side from CMP\nresponse validation against a malicious or on-path (MITM) server. The\nreliable consequence is a denial of service; there is no memory disclosure,\nno controlled memory write, and no path to code execution. CMP is a\nspecialized feature that an application must explicitly enable.\n\nFIPS impact: no\nAs the CMP code lives outside the FIPS module boundary, no FIPS modules\nare affected by this CVE.\n## Remediation\nUpgrade `Alpine:3.24` `openssl` to version 3.5.8-r0 or higher.\n## References\n- [https://github.com/openssl/openssl/commit/37882aa2e0256e1072442a8f62f7db45b995c45b](https://github.com/openssl/openssl/commit/37882aa2e0256e1072442a8f62f7db45b995c45b)\n- [https://github.com/openssl/openssl/commit/a17cc8d612ecff6d94a9b7ca8b5283ddf5ff570e](https://github.com/openssl/openssl/commit/a17cc8d612ecff6d94a9b7ca8b5283ddf5ff570e)\n- [https://github.com/openssl/openssl/commit/a1f348ccb328c3afbd4ba6883f9b7c813c043259](https://github.com/openssl/openssl/commit/a1f348ccb328c3afbd4ba6883f9b7c813c043259)\n- [https://github.com/openssl/openssl/commit/a7af46a92d0ce19a90e669ef56d2576a07924226](https://github.com/openssl/openssl/commit/a7af46a92d0ce19a90e669ef56d2576a07924226)\n- [https://github.com/openssl/openssl/commit/cdacfff557389abfa9e4615abded2ec984517d6c](https://github.com/openssl/openssl/commit/cdacfff557389abfa9e4615abded2ec984517d6c)\n- [https://openssl-library.org/news/secadv/20260825.txt](https://openssl-library.org/news/secadv/20260825.txt)\n"
-              },
-              "defaultConfiguration": {
-                "level": "warning"
-              },
-              "properties": {
-                "tags": [
-                  "security",
-                  "apk"
-                ],
-                "cvssv3_baseScore": null,
-                "security-severity": "null"
-              }
-            }
-          ]
+          "rules": []
         }
       },
-      "results": [
-        {
-          "ruleId": "SNYK-ALPINE324-OPENSSL-19257375",
-          "level": "note",
-          "message": {
-            "text": "This file introduces a vulnerable openssl package with a low severity vulnerability."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "docker.io/alexsotoharness/tangerine-spring-boot-sample_52fe08e/alexsotoharness/tangerine-spring-boot-sample"
-                },
-                "region": {
-                  "startLine": 1
-                }
-              },
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "openssl@3.5.7-r0"
-                }
-              ]
-            }
-          ],
-          "fixes": [
-            {
-              "description": {
-                "text": "Upgrade to openssl/openssl@3.5.8-r0"
-              },
-              "artifactChanges": [
-                {
-                  "artifactLocation": {
-                    "uri": "docker.io/alexsotoharness/tangerine-spring-boot-sample_52fe08e/alexsotoharness/tangerine-spring-boot-sample"
-                  },
-                  "replacements": [
-                    {
-                      "deletedRegion": {
-                        "startLine": 1
-                      },
-                      "insertedContent": {
-                        "text": "openssl/openssl@3.5.8-r0"
-                      }
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "ruleId": "SNYK-ALPINE324-OPENSSL-19257376",
-          "level": "note",
-          "message": {
-            "text": "This file introduces a vulnerable openssl package with a low severity vulnerability."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "docker.io/alexsotoharness/tangerine-spring-boot-sample_52fe08e/alexsotoharness/tangerine-spring-boot-sample"
-                },
-                "region": {
-                  "startLine": 1
-                }
-              },
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "openssl@3.5.7-r0"
-                }
-              ]
-            }
-          ],
-          "fixes": [
-            {
-              "description": {
-                "text": "Upgrade to openssl/openssl@3.5.8-r0"
-              },
-              "artifactChanges": [
-                {
-                  "artifactLocation": {
-                    "uri": "docker.io/alexsotoharness/tangerine-spring-boot-sample_52fe08e/alexsotoharness/tangerine-spring-boot-sample"
-                  },
-                  "replacements": [
-                    {
-                      "deletedRegion": {
-                        "startLine": 1
-                      },
-                      "insertedContent": {
-                        "text": "openssl/openssl@3.5.8-r0"
-                      }
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "ruleId": "SNYK-ALPINE324-OPENSSL-19257380",
-          "level": "note",
-          "message": {
-            "text": "This file introduces a vulnerable openssl package with a low severity vulnerability."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "docker.io/alexsotoharness/tangerine-spring-boot-sample_52fe08e/alexsotoharness/tangerine-spring-boot-sample"
-                },
-                "region": {
-                  "startLine": 1
-                }
-              },
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "openssl@3.5.7-r0"
-                }
-              ]
-            }
-          ],
-          "fixes": [
-            {
-              "description": {
-                "text": "Upgrade to openssl/openssl@3.5.8-r0"
-              },
-              "artifactChanges": [
-                {
-                  "artifactLocation": {
-                    "uri": "docker.io/alexsotoharness/tangerine-spring-boot-sample_52fe08e/alexsotoharness/tangerine-spring-boot-sample"
-                  },
-                  "replacements": [
-                    {
-                      "deletedRegion": {
-                        "startLine": 1
-                      },
-                      "insertedContent": {
-                        "text": "openssl/openssl@3.5.8-r0"
-                      }
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "ruleId": "SNYK-ALPINE324-OPENSSL-19257381",
-          "level": "note",
-          "message": {
-            "text": "This file introduces a vulnerable openssl package with a low severity vulnerability."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "docker.io/alexsotoharness/tangerine-spring-boot-sample_52fe08e/alexsotoharness/tangerine-spring-boot-sample"
-                },
-                "region": {
-                  "startLine": 1
-                }
-              },
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "openssl@3.5.7-r0"
-                }
-              ]
-            }
-          ],
-          "fixes": [
-            {
-              "description": {
-                "text": "Upgrade to openssl/openssl@3.5.8-r0"
-              },
-              "artifactChanges": [
-                {
-                  "artifactLocation": {
-                    "uri": "docker.io/alexsotoharness/tangerine-spring-boot-sample_52fe08e/alexsotoharness/tangerine-spring-boot-sample"
-                  },
-                  "replacements": [
-                    {
-                      "deletedRegion": {
-                        "startLine": 1
-                      },
-                      "insertedContent": {
-                        "text": "openssl/openssl@3.5.8-r0"
-                      }
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "ruleId": "SNYK-ALPINE324-OPENSSL-19257382",
-          "level": "note",
-          "message": {
-            "text": "This file introduces a vulnerable openssl package with a low severity vulnerability."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "docker.io/alexsotoharness/tangerine-spring-boot-sample_52fe08e/alexsotoharness/tangerine-spring-boot-sample"
-                },
-                "region": {
-                  "startLine": 1
-                }
-              },
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "openssl@3.5.7-r0"
-                }
-              ]
-            }
-          ],
-          "fixes": [
-            {
-              "description": {
-                "text": "Upgrade to openssl/openssl@3.5.8-r0"
-              },
-              "artifactChanges": [
-                {
-                  "artifactLocation": {
-                    "uri": "docker.io/alexsotoharness/tangerine-spring-boot-sample_52fe08e/alexsotoharness/tangerine-spring-boot-sample"
-                  },
-                  "replacements": [
-                    {
-                      "deletedRegion": {
-                        "startLine": 1
-                      },
-                      "insertedContent": {
-                        "text": "openssl/openssl@3.5.8-r0"
-                      }
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "ruleId": "SNYK-ALPINE324-OPENSSL-19257384",
-          "level": "note",
-          "message": {
-            "text": "This file introduces a vulnerable openssl package with a low severity vulnerability."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "docker.io/alexsotoharness/tangerine-spring-boot-sample_52fe08e/alexsotoharness/tangerine-spring-boot-sample"
-                },
-                "region": {
-                  "startLine": 1
-                }
-              },
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "openssl@3.5.7-r0"
-                }
-              ]
-            }
-          ],
-          "fixes": [
-            {
-              "description": {
-                "text": "Upgrade to openssl/openssl@3.5.8-r0"
-              },
-              "artifactChanges": [
-                {
-                  "artifactLocation": {
-                    "uri": "docker.io/alexsotoharness/tangerine-spring-boot-sample_52fe08e/alexsotoharness/tangerine-spring-boot-sample"
-                  },
-                  "replacements": [
-                    {
-                      "deletedRegion": {
-                        "startLine": 1
-                      },
-                      "insertedContent": {
-                        "text": "openssl/openssl@3.5.8-r0"
-                      }
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "ruleId": "SNYK-ALPINE324-OPENSSL-19257388",
-          "level": "note",
-          "message": {
-            "text": "This file introduces a vulnerable openssl package with a low severity vulnerability."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "docker.io/alexsotoharness/tangerine-spring-boot-sample_52fe08e/alexsotoharness/tangerine-spring-boot-sample"
-                },
-                "region": {
-                  "startLine": 1
-                }
-              },
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "openssl@3.5.7-r0"
-                }
-              ]
-            }
-          ],
-          "fixes": [
-            {
-              "description": {
-                "text": "Upgrade to openssl/openssl@3.5.8-r0"
-              },
-              "artifactChanges": [
-                {
-                  "artifactLocation": {
-                    "uri": "docker.io/alexsotoharness/tangerine-spring-boot-sample_52fe08e/alexsotoharness/tangerine-spring-boot-sample"
-                  },
-                  "replacements": [
-                    {
-                      "deletedRegion": {
-                        "startLine": 1
-                      },
-                      "insertedContent": {
-                        "text": "openssl/openssl@3.5.8-r0"
-                      }
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "ruleId": "SNYK-ALPINE324-OPENSSL-19257390",
-          "level": "note",
-          "message": {
-            "text": "This file introduces a vulnerable openssl package with a low severity vulnerability."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "docker.io/alexsotoharness/tangerine-spring-boot-sample_52fe08e/alexsotoharness/tangerine-spring-boot-sample"
-                },
-                "region": {
-                  "startLine": 1
-                }
-              },
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "openssl@3.5.7-r0"
-                }
-              ]
-            }
-          ],
-          "fixes": [
-            {
-              "description": {
-                "text": "Upgrade to openssl/openssl@3.5.8-r0"
-              },
-              "artifactChanges": [
-                {
-                  "artifactLocation": {
-                    "uri": "docker.io/alexsotoharness/tangerine-spring-boot-sample_52fe08e/alexsotoharness/tangerine-spring-boot-sample"
-                  },
-                  "replacements": [
-                    {
-                      "deletedRegion": {
-                        "startLine": 1
-                      },
-                      "insertedContent": {
-                        "text": "openssl/openssl@3.5.8-r0"
-                      }
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "ruleId": "SNYK-ALPINE324-OPENSSL-19257391",
-          "level": "note",
-          "message": {
-            "text": "This file introduces a vulnerable openssl package with a low severity vulnerability."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "docker.io/alexsotoharness/tangerine-spring-boot-sample_52fe08e/alexsotoharness/tangerine-spring-boot-sample"
-                },
-                "region": {
-                  "startLine": 1
-                }
-              },
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "openssl@3.5.7-r0"
-                }
-              ]
-            }
-          ],
-          "fixes": [
-            {
-              "description": {
-                "text": "Upgrade to openssl/openssl@3.5.8-r0"
-              },
-              "artifactChanges": [
-                {
-                  "artifactLocation": {
-                    "uri": "docker.io/alexsotoharness/tangerine-spring-boot-sample_52fe08e/alexsotoharness/tangerine-spring-boot-sample"
-                  },
-                  "replacements": [
-                    {
-                      "deletedRegion": {
-                        "startLine": 1
-                      },
-                      "insertedContent": {
-                        "text": "openssl/openssl@3.5.8-r0"
-                      }
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "ruleId": "SNYK-ALPINE324-OPENSSL-19257392",
-          "level": "note",
-          "message": {
-            "text": "This file introduces a vulnerable openssl package with a low severity vulnerability."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "docker.io/alexsotoharness/tangerine-spring-boot-sample_52fe08e/alexsotoharness/tangerine-spring-boot-sample"
-                },
-                "region": {
-                  "startLine": 1
-                }
-              },
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "openssl@3.5.7-r0"
-                }
-              ]
-            }
-          ],
-          "fixes": [
-            {
-              "description": {
-                "text": "Upgrade to openssl/openssl@3.5.8-r0"
-              },
-              "artifactChanges": [
-                {
-                  "artifactLocation": {
-                    "uri": "docker.io/alexsotoharness/tangerine-spring-boot-sample_52fe08e/alexsotoharness/tangerine-spring-boot-sample"
-                  },
-                  "replacements": [
-                    {
-                      "deletedRegion": {
-                        "startLine": 1
-                      },
-                      "insertedContent": {
-                        "text": "openssl/openssl@3.5.8-r0"
-                      }
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ],
+      "results": [],
       "automationDetails": {
-        "id": "Snyk/Container/docker-image|docker.io/alexsotoharness/tangerine-spring-boot-sample/0/2026-08-26T21:06:21.521Z"
+        "id": "Snyk/Container/docker-image|docker.io/alexsotoharness/tangerine-spring-boot-sample/0/2026-10-22T15:40:46.527Z"
       }
     },
     {
       "tool": {
         "driver": {
           "name": "Snyk Container",
-          "semanticVersion": "1.1307.0",
-          "version": "1.1307.0",
+          "semanticVersion": "1.1308.2",
+          "version": "1.1308.2",
           "informationUri": "https://docs.snyk.io/",
           "properties": {
             "artifactsScanned": 38
@@ -801,6 +79,31 @@
                 ],
                 "cvssv3_baseScore": 1.8,
                 "security-severity": "1.8"
+              }
+            },
+            {
+              "id": "SNYK-JAVA-CHQOSLOGBACK-17282376",
+              "shortDescription": {
+                "text": "Medium severity - Deserialization of Untrusted Data vulnerability in ch.qos.logback:logback-core"
+              },
+              "fullDescription": {
+                "text": "(CVE-2026-10532) ch.qos.logback:logback-core@1.4.14"
+              },
+              "help": {
+                "text": "",
+                "markdown": "## Overview\n[ch.qos.logback:logback-core](https://mvnrepository.com/artifact/ch.qos.logback/logback-core) is a logback-core module.\n\nAffected versions of this package are vulnerable to Deserialization of Untrusted Data in the `HardenedObjectInputStream` module. An attacker can instantiate unauthorized Proxy objects by supplying crafted serialized data to the `SimpleSocketServer` or `SimpleSSLSocketServer`, thereby bypassing intended security restrictions.\n\n## Details\n\nSerialization is a process of converting an object into a sequence of bytes which can be persisted to a disk or database or can be sent through streams. The reverse process of creating object from sequence of bytes is called deserialization. Serialization is commonly used for communication (sharing objects between multiple hosts) and persistence (store the object state in a file or a database). It is an integral part of popular protocols like _Remote Method Invocation (RMI)_, _Java Management Extension (JMX)_, _Java Messaging System (JMS)_, _Action Message Format (AMF)_, _Java Server Faces (JSF) ViewState_, etc.\n\n_Deserialization of untrusted data_ ([CWE-502](https://cwe.mitre.org/data/definitions/502.html)) is when the application deserializes untrusted data without sufficiently verifying that the resulting data will be valid, thus allowing the attacker to control the state or the flow of the execution.\n  \n## Remediation\nUpgrade `ch.qos.logback:logback-core` to version 1.5.34 or higher.\n## References\n- [GitHub Commit](https://github.com/qos-ch/logback/commit/f7a0654c2b7e8e1c461e3d9e483e82ef969b5818)\n- [Logback Release Notes](https://logback.qos.ch/news.html#1.5.34)\n"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "CWE-502",
+                  "maven"
+                ],
+                "cvssv3_baseScore": 6.3,
+                "security-severity": "6.3"
               }
             },
             {
@@ -929,6 +232,56 @@
               }
             },
             {
+              "id": "SNYK-JAVA-CHQOSLOGBACK-19882330",
+              "shortDescription": {
+                "text": "Medium severity - Directory Traversal vulnerability in ch.qos.logback:logback-classic"
+              },
+              "fullDescription": {
+                "text": "(CVE-2026-19880) ch.qos.logback:logback-classic@1.4.14"
+              },
+              "help": {
+                "text": "",
+                "markdown": "## Overview\n[ch.qos.logback:logback-classic](https://mvnrepository.com/artifact/ch.qos.logback/logback-classic) is a reliable, generic, fast and flexible logging library for Java.\n\nAffected versions of this package are vulnerable to Directory Traversal in `MDCBasedDiscriminator`, used by `SiftingAppender`, which takes an MDC value as the discriminating key without removing path separators, so the value reaches the nested `FileAppender` path unsanitized. An attacker can direct log output to a file outside the intended directory by supplying an MDC value containing `/` or `\\` path segments. This requires a configuration whose `SiftingAppender` discriminates on MDC and whose nested `FileAppender` interpolates the discriminating key into its file path, with that MDC value populated from attacker-influenced input.\n\n**Note:** This is a bypass of the fix for the vulnerability described in [CVE-2025-11226](https://security.snyk.io/vuln/SNYK-JAVA-CHQOSLOGBACK-13169722).\n\n## Details\n\nA Directory Traversal attack (also known as path traversal) aims to access files and directories that are stored outside the intended folder. By manipulating files with \"dot-dot-slash (../)\" sequences and its variations, or by using absolute file paths, it may be possible to access arbitrary files and directories stored on file system, including application source code, configuration, and other critical system files.\n\nDirectory Traversal vulnerabilities can be generally divided into two types:\n\n- **Information Disclosure**: Allows the attacker to gain information about the folder structure or read the contents of sensitive files on the system.\n\n`st` is a module for serving static files on web pages, and contains a [vulnerability of this type](https://snyk.io/vuln/npm:st:20140206). In our example, we will serve files from the `public` route.\n\nIf an attacker requests the following URL from our server, it will in turn leak the sensitive private key of the root user.\n\n```\ncurl http://localhost:8080/public/%2e%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/root/.ssh/id_rsa\n```\n**Note** `%2e` is the URL encoded version of `.` (dot).\n\n- **Writing arbitrary files**: Allows the attacker to create or replace existing files. This type of vulnerability is also known as `Zip-Slip`. \n\nOne way to achieve this is by using a malicious `zip` archive that holds path traversal filenames. When each filename in the zip archive gets concatenated to the target extraction folder, without validation, the final path ends up outside of the target folder. If an executable or a configuration file is overwritten with a file containing malicious code, the problem can turn into an arbitrary code execution issue quite easily.\n\nThe following is an example of a `zip` archive with one benign file and one malicious file. Extracting the malicious file will result in traversing out of the target folder, ending up in `/root/.ssh/` overwriting the `authorized_keys` file:\n\n```\n2018-04-15 22:04:29 .....           19           19  good.txt\n2018-04-15 22:04:42 .....           20           20  ../../../../../../root/.ssh/authorized_keys\n```\n\n## Remediation\nUpgrade `ch.qos.logback:logback-classic` to version 1.6.3 or higher.\n## References\n- [GitHub Commit](https://github.com/qos-ch/logback/commit/761821bfaacac3a0ad44fa546cfc814429bf9312)\n- [Release Notes](https://logback.qos.ch/news.html#1.6.3)\n"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "CWE-22",
+                  "maven"
+                ],
+                "cvssv3_baseScore": 5.9,
+                "security-severity": "5.9"
+              }
+            },
+            {
+              "id": "SNYK-JAVA-CHQOSLOGBACK-20824362",
+              "shortDescription": {
+                "text": "Medium severity - Directory Traversal vulnerability in ch.qos.logback:logback-classic"
+              },
+              "fullDescription": {
+                "text": "(CVE-2026-104721) ch.qos.logback:logback-classic@1.4.14"
+              },
+              "help": {
+                "text": "",
+                "markdown": "## Overview\n[ch.qos.logback:logback-classic](https://mvnrepository.com/artifact/ch.qos.logback/logback-classic) is a reliable, generic, fast and flexible logging library for Java.\n\nAffected versions of this package are vulnerable to Directory Traversal via unsanitized input in the `MDCDiscriminator` process. An attacker can create or append log files outside the intended directory by supplying crafted values, such as through HTTP headers, that influence the log file path. This is only exploitable if `SiftingAppender` is active and unsanitized data is used by `MDCDiscriminator`.\r\n \r\n## Workaround \r\nThis vulnerability can be mitigated by sanitizing relevant data provided by the user.\n\n## Details\n\nA Directory Traversal attack (also known as path traversal) aims to access files and directories that are stored outside the intended folder. By manipulating files with \"dot-dot-slash (../)\" sequences and its variations, or by using absolute file paths, it may be possible to access arbitrary files and directories stored on file system, including application source code, configuration, and other critical system files.\n\nDirectory Traversal vulnerabilities can be generally divided into two types:\n\n- **Information Disclosure**: Allows the attacker to gain information about the folder structure or read the contents of sensitive files on the system.\n\n`st` is a module for serving static files on web pages, and contains a [vulnerability of this type](https://snyk.io/vuln/npm:st:20140206). In our example, we will serve files from the `public` route.\n\nIf an attacker requests the following URL from our server, it will in turn leak the sensitive private key of the root user.\n\n```\ncurl http://localhost:8080/public/%2e%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/root/.ssh/id_rsa\n```\n**Note** `%2e` is the URL encoded version of `.` (dot).\n\n- **Writing arbitrary files**: Allows the attacker to create or replace existing files. This type of vulnerability is also known as `Zip-Slip`. \n\nOne way to achieve this is by using a malicious `zip` archive that holds path traversal filenames. When each filename in the zip archive gets concatenated to the target extraction folder, without validation, the final path ends up outside of the target folder. If an executable or a configuration file is overwritten with a file containing malicious code, the problem can turn into an arbitrary code execution issue quite easily.\n\nThe following is an example of a `zip` archive with one benign file and one malicious file. Extracting the malicious file will result in traversing out of the target folder, ending up in `/root/.ssh/` overwriting the `authorized_keys` file:\n\n```\n2018-04-15 22:04:29 .....           19           19  good.txt\n2018-04-15 22:04:42 .....           20           20  ../../../../../../root/.ssh/authorized_keys\n```\n\n## Remediation\nUpgrade `ch.qos.logback:logback-classic` to version 1.6.5 or higher.\n## References\n- [GitHub Release](https://github.com/qos-ch/logback/releases/tag/v_1.6.5)\n- [logback.qos.ch](https://logback.qos.ch/news.html#1.6.5)\n"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "CWE-22",
+                  "maven"
+                ],
+                "cvssv3_baseScore": 6.3,
+                "security-severity": "6.3"
+              }
+            },
+            {
               "id": "SNYK-JAVA-CHQOSLOGBACK-8539867",
               "shortDescription": {
                 "text": "Medium severity - Improper Neutralization of Special Elements vulnerability in ch.qos.logback:logback-classic"
@@ -1014,6 +367,31 @@
               "help": {
                 "text": "",
                 "markdown": "## Overview\n[com.fasterxml.jackson.core:jackson-core](https://github.com/FasterXML/jackson-core) is a Core Jackson abstractions, basic JSON streaming API implementation\n\nAffected versions of this package are vulnerable to Allocation of Resources Without Limits or Throttling in the `NonBlockingUtf8JsonParserBase` file. An attacker can exhaust system memory by streaming JSON input in small chunks to the asynchronous parser, causing unbounded accumulation of digit characters in memory due to missing validation of number length during chunked parsing. This can lead to denial of service by overwhelming the application's memory resources.\n## Remediation\nUpgrade `com.fasterxml.jackson.core:jackson-core` to version 2.18.8, 2.21.4 or higher.\n## References\n- [GitHub Advisory](https://github.com/FasterXML/jackson-core/security/advisories/GHSA-r7wm-3cxj-wff9)\n- [GitHub Commit](https://github.com/FasterXML/jackson-core/commit/050b429804dce2a7e08f0be1b0b4c3d040fdb9cd)\n- [GitHub Commit](https://github.com/FasterXML/jackson-core/commit/4cdd529749da396cc7edf6d4a2aad41d47902641)\n- [GitHub Commit](https://github.com/FasterXML/jackson-core/commit/b0c428e6f993e1b5ece5c1c3cb2523e887cd52cf)\n- [GitHub Commit](https://github.com/FasterXML/jackson-core/commit/c5941e5aae7fd5aeac55d66933cfb82b9aabeef8)\n- [GitHub PR](https://github.com/FasterXML/jackson-core/pull/1611)\n"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "CWE-770",
+                  "maven"
+                ],
+                "cvssv3_baseScore": 8.7,
+                "security-severity": "8.7"
+              }
+            },
+            {
+              "id": "SNYK-JAVA-COMFASTERXMLJACKSONCORE-20059179",
+              "shortDescription": {
+                "text": "High severity - Allocation of Resources Without Limits or Throttling vulnerability in com.fasterxml.jackson.core:jackson-core"
+              },
+              "fullDescription": {
+                "text": "(CVE-2026-89425) com.fasterxml.jackson.core:jackson-core@2.15.4"
+              },
+              "help": {
+                "text": "",
+                "markdown": "## Overview\n[com.fasterxml.jackson.core:jackson-core](https://github.com/FasterXML/jackson-core) is a Core Jackson abstractions, basic JSON streaming API implementation\n\nAffected versions of this package are vulnerable to Allocation of Resources Without Limits or Throttling in the `_reportInvalidToken(int, String, String)` method of `UTF8DataInputJsonParser`, which accumulates invalid token characters into a `StringBuilder` with no check against `ErrorReportConfiguration.getMaxErrorTokenLength()`, unlike `UTF8StreamJsonParser`, `ReaderBasedJsonParser`, and `NonBlockingUtf8JsonParserBase`, which enforce the 256-character default. An attacker can exhaust the JVM heap by submitting a sufficiently long malformed token, since the whole token is copied into the exception message, where a 20-million-character token produces a 20,000,109-character message against 367 characters on the bounded path. This requires the application to create its parser through `JsonFactory.createParser(DataInput)`, and no configuration constrains the path, since `maxDocumentLength` does not apply to `DataInput` sources and `maxStringLength` does not cover it.\n## Remediation\nUpgrade `com.fasterxml.jackson.core:jackson-core` to version 2.18.11, 2.21.7, 2.22.3 or higher.\n## References\n- [GitHub Advisory](https://github.com/FasterXML/jackson-core/security/advisories/GHSA-7hhh-6rmp-j9qf)\n- [GitHub Commit](https://github.com/FasterXML/jackson-core/commit/211cf2c5d91abbec38067f37efc1363cd4e88ee3)\n- [GitHub PR](https://github.com/FasterXML/jackson-core/pull/1698)\n"
               },
               "defaultConfiguration": {
                 "level": "error"
@@ -1173,6 +551,131 @@
                 "tags": [
                   "security",
                   "CWE-918",
+                  "maven"
+                ],
+                "cvssv3_baseScore": 6.9,
+                "security-severity": "6.9"
+              }
+            },
+            {
+              "id": "SNYK-JAVA-COMFASTERXMLJACKSONCORE-19477042",
+              "shortDescription": {
+                "text": "Medium severity - Use of Externally-Controlled Input to Select Classes or Code ('Unsafe Reflection') vulnerability in com.fasterxml.jackson.core:jackson-databind"
+              },
+              "fullDescription": {
+                "text": "(CVE-2026-19032) com.fasterxml.jackson.core:jackson-databind@2.15.4"
+              },
+              "help": {
+                "text": "",
+                "markdown": "## Overview\n[com.fasterxml.jackson.core:jackson-databind](https://github.com/FasterXML/jackson-databind) is a library which contains the general-purpose data-binding functionality and tree-model for Jackson Data Processor.\n\nAffected versions of this package are vulnerable to Use of Externally-Controlled Input to Select Classes or Code ('Unsafe Reflection') through `NioPathDeserializer` in `src/main/java/com/fasterxml/jackson/databind/ext/NioPathDeserializer.java`. An attacker can force `readValue()` to resolve an attacker-controlled `java.nio.file.Path` URI by supplying a non-`file` scheme such as `jar:`, `http:`, `s3:`, or a custom provider scheme in untrusted JSON. That input reaches `new URI(value)` and then `Path.of(uri)`, which falls back to `ServiceLoader<FileSystemProvider>` resolution and can invoke a matching provider’s `getPath(uri)` during deserialization. The result is unintended provider loading and provider-driven path handling inside the application, which can trigger denial of service or other side effects depending on what `FileSystemProvider` implementations are present on the classpath.\n## Remediation\nUpgrade `com.fasterxml.jackson.core:jackson-databind` to version 2.18.10, 2.21.6, 2.22.2 or higher.\n## References\n- [GitHub Commit](https://github.com/FasterXML/jackson-databind/commit/cc6756b61ed90b6b9227f670e0408d5d9bd48551)\n- [GitHub Commit](https://github.com/FasterXML/jackson-databind/commit/ce26eda3481cd796f76ba4c53ffe1da23b53f166)\n- [GitHub Commit](https://github.com/FasterXML/jackson-databind/commit/d94bb632becfe0ba96926b9909ab06d1f87aad6d)\n- [GitHub PR](https://github.com/FasterXML/jackson-databind/pull/6129)\n- [Maintainer's Advisory](https://github.com/FasterXML/jackson-databind/security/advisories/GHSA-wjgm-6hv5-3cvf)\n"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "CWE-470",
+                  "maven"
+                ],
+                "cvssv3_baseScore": 6.9,
+                "security-severity": "6.9"
+              }
+            },
+            {
+              "id": "SNYK-JAVA-COMFASTERXMLJACKSONCORE-19496766",
+              "shortDescription": {
+                "text": "Medium severity - Deserialization of Untrusted Data vulnerability in com.fasterxml.jackson.core:jackson-databind"
+              },
+              "fullDescription": {
+                "text": "(CVE-2026-83557) com.fasterxml.jackson.core:jackson-databind@2.15.4"
+              },
+              "help": {
+                "text": "",
+                "markdown": "## Overview\n[com.fasterxml.jackson.core:jackson-databind](https://github.com/FasterXML/jackson-databind) is a library which contains the general-purpose data-binding functionality and tree-model for Jackson Data Processor.\n\nAffected versions of this package are vulnerable to Deserialization of Untrusted Data in the `isSafeSubType()` method of `DefaultBaseTypeLimitingValidator`, whose denylist of unsafe base types omits `java.lang.Comparable`, so the method returns true for any subtype resolved under a `Comparable` base. An attacker can trigger instantiation of arbitrary classes that implement `Comparable`, such as `java.io.File` to reach path-traversal primitives, by sending JSON with attacker-controlled type identifiers. This requires the application to use a bare `@JsonTypeInfo` with the default validator and no explicit `PolymorphicTypeValidator`, and a property or class whose declared base type is `Comparable`.\r\n\r\n## Workaround\r\n\r\nThis vulnerability can be avoided by configuring an explicit restrictive `PolymorphicTypeValidator`, such as a `BasicPolymorphicTypeValidator` allowlist passed to `activateDefaultTyping()`, instead of relying on the default validator.\r\n\r\n**Note:** The discoverer of this vulnerability reports that \"I have not identified a class implementing Comparable that yields code execution purely through deserialization\".\n\n## Details\n\nSerialization is a process of converting an object into a sequence of bytes which can be persisted to a disk or database or can be sent through streams. The reverse process of creating object from sequence of bytes is called deserialization. Serialization is commonly used for communication (sharing objects between multiple hosts) and persistence (store the object state in a file or a database). It is an integral part of popular protocols like _Remote Method Invocation (RMI)_, _Java Management Extension (JMX)_, _Java Messaging System (JMS)_, _Action Message Format (AMF)_, _Java Server Faces (JSF) ViewState_, etc.\n\n_Deserialization of untrusted data_ ([CWE-502](https://cwe.mitre.org/data/definitions/502.html)) is when the application deserializes untrusted data without sufficiently verifying that the resulting data will be valid, thus allowing the attacker to control the state or the flow of the execution.\n  \n## Remediation\nUpgrade `com.fasterxml.jackson.core:jackson-databind` to version 2.18.10, 2.21.6, 2.22.2 or higher.\n## References\n- [GitHub Advisory](https://github.com/FasterXML/jackson-databind/security/advisories/GHSA-gx83-3vf8-gh7j)\n- [GitHub Commit](https://github.com/FasterXML/jackson-databind/commit/eb3b7fc0f9c0d27f471550ac3316b17d1987388f)\n- [GitHub Issue](https://github.com/FasterXML/jackson-databind/issues/6156)\n- [GitHub PR](https://github.com/FasterXML/jackson-databind/pull/6155)\n"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "CWE-502",
+                  "maven"
+                ],
+                "cvssv3_baseScore": 6.3,
+                "security-severity": "6.3"
+              }
+            },
+            {
+              "id": "SNYK-JAVA-COMFASTERXMLJACKSONCORE-19778370",
+              "shortDescription": {
+                "text": "High severity - Allocation of Resources Without Limits or Throttling vulnerability in com.fasterxml.jackson.core:jackson-databind"
+              },
+              "fullDescription": {
+                "text": "(CVE-2026-68497) com.fasterxml.jackson.core:jackson-databind@2.15.4"
+              },
+              "help": {
+                "text": "",
+                "markdown": "## Overview\n[com.fasterxml.jackson.core:jackson-databind](https://github.com/FasterXML/jackson-databind) is a library which contains the general-purpose data-binding functionality and tree-model for Jackson Data Processor.\n\nAffected versions of this package are vulnerable to Allocation of Resources Without Limits or Throttling via the `CoreXMLDeserializers.Std._deserialize` path in `src/main/java/com/fasterxml/jackson/databind/ext/CoreXMLDeserializers.java`. An attacker can consume excessive CPU by supplying a JSON string bound to a `javax.xml.datatype.Duration` or `XMLGregorianCalendar` field, causing `DatatypeFactory.newDuration(value)` or `newXMLGregorianCalendar(value)` to parse arbitrarily long numeric components. This stalls the request-handling thread and can exhaust server CPU under default deserialization settings, denying service to other users.\n## Remediation\nUpgrade `com.fasterxml.jackson.core:jackson-databind` to version 2.18.10, 2.21.6, 2.22.2 or higher.\n## References\n- [GitHub Commit](https://github.com/FasterXML/jackson-databind/commit/a99b7e74c8928f43f6975773a8c862c8316178bd)\n- [GitHub PR](https://github.com/FasterXML/jackson-databind/pull/6127)\n- [Maintainer's Advisory](https://github.com/FasterXML/jackson-databind/security/advisories/GHSA-q4xh-88c3-wmh7)\n"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "CWE-770",
+                  "maven"
+                ],
+                "cvssv3_baseScore": 8.7,
+                "security-severity": "8.7"
+              }
+            },
+            {
+              "id": "SNYK-JAVA-COMFASTERXMLJACKSONCORE-20059683",
+              "shortDescription": {
+                "text": "High severity - Allocation of Resources Without Limits or Throttling vulnerability in com.fasterxml.jackson.core:jackson-databind"
+              },
+              "fullDescription": {
+                "text": "(CVE-2026-91777) com.fasterxml.jackson.core:jackson-databind@2.15.4"
+              },
+              "help": {
+                "text": "",
+                "markdown": "## Overview\n[com.fasterxml.jackson.core:jackson-databind](https://github.com/FasterXML/jackson-databind) is a library which contains the general-purpose data-binding functionality and tree-model for Jackson Data Processor.\n\nAffected versions of this package are vulnerable to Allocation of Resources Without Limits or Throttling in the `resolveForwardReference()` method of `CollectionDeserializer.CollectionReferringAccumulator`, and in the corresponding map accumulators, which perform a linear search of the pending accumulator for every resolved object ID. An attacker can consume quadratic CPU and exhaust a request-time or worker-capacity budget by submitting JSON whose N unresolved object-ID references resolve in reverse order, costing roughly N*(N+1)/2 comparisons, measured at 2,003,000 for N=2,000. This requires the application to deserialize attacker-influenced JSON into an identity-enabled collection or map under `@JsonIdentityInfo`, though it needs no deep nesting or unusual JSON syntax.\n## Remediation\nUpgrade `com.fasterxml.jackson.core:jackson-databind` to version 2.18.11, 2.21.7, 2.22.3 or higher.\n## References\n- [GitHub Advisory](https://github.com/FasterXML/jackson-databind/security/advisories/GHSA-cxp5-3px4-pw24)\n- [GitHub Commit](https://github.com/FasterXML/jackson-databind/commit/37ad9b81712cbb9fb62c2d2c1813593252a24b67)\n- [GitHub Issue](https://github.com/FasterXML/jackson-databind/issues/6204)\n"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "CWE-770",
+                  "maven"
+                ],
+                "cvssv3_baseScore": 8.7,
+                "security-severity": "8.7"
+              }
+            },
+            {
+              "id": "SNYK-JAVA-COMFASTERXMLJACKSONCORE-20059685",
+              "shortDescription": {
+                "text": "Medium severity - Allocation of Resources Without Limits or Throttling vulnerability in com.fasterxml.jackson.core:jackson-databind"
+              },
+              "fullDescription": {
+                "text": "(CVE-2026-91776) com.fasterxml.jackson.core:jackson-databind@2.15.4"
+              },
+              "help": {
+                "text": "",
+                "markdown": "## Overview\n[com.fasterxml.jackson.core:jackson-databind](https://github.com/FasterXML/jackson-databind) is a library which contains the general-purpose data-binding functionality and tree-model for Jackson Data Processor.\n\nAffected versions of this package are vulnerable to Allocation of Resources Without Limits or Throttling in the `_findDeserializer()` method of `TypeDeserializerBase`, which caches every unknown type ID as a distinct key in the `_deserializers` map even when all of them resolve to the same `defaultImpl` fallback. An attacker can grow that cache without bound for the lifetime of the process, exhausting memory over time, by submitting a stream of novel type identifiers. This requires the application to use name-based polymorphism through `@JsonTypeInfo(use = Id.NAME, defaultImpl = ...)`, to accept attacker-controlled type identifiers, and to reuse the mapper instance across requests.\n## Remediation\nUpgrade `com.fasterxml.jackson.core:jackson-databind` to version 2.18.11, 2.21.7, 2.22.3 or higher.\n## References\n- [GitHub Advisory](https://github.com/FasterXML/jackson-databind/security/advisories/GHSA-wv8q-qhhj-9h54)\n- [GitHub Commit](https://github.com/FasterXML/jackson-databind/commit/2870d1d6dc1b7e1c07ee11dd5b04ab71cddbb577)\n- [GitHub Issue](https://github.com/FasterXML/jackson-databind/issues/6203)\n"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "CWE-770",
                   "maven"
                 ],
                 "cvssv3_baseScore": 6.9,
@@ -1489,7 +992,7 @@
               },
               "help": {
                 "text": "",
-                "markdown": "## Overview\n[org.apache.tomcat.embed:tomcat-embed-core](https://mvnrepository.com/artifact/org.apache.tomcat.embed/tomcat-embed-core) is a Core Tomcat implementation.\n\nAffected versions of this package are vulnerable to Relative Path Traversal via the URL normalization. An attacker can bypass security constraints and access restricted directories such as `/WEB-INF/` and `/META-INF/` by manipulating the request URI. If PUT requests are also enabled then malicious files could be uploaded leading to remote code execution.\r\n\r\n**Note:**\r\n\r\n1) Older, EOL versions may also be affected.\r\n2) PUT requests are normally limited to trusted users and it is considered unlikely that PUT requests would be enabled in conjunction with a rewrite that manipulated the URI.\n## Remediation\nUpgrade `org.apache.tomcat.embed:tomcat-embed-core` to version 9.0.109, 10.1.45, 11.0.11 or higher.\n## References\n- [Apache Mailing List](https://lists.apache.org/thread/n05kjcwyj1s45ovs8ll1qrrojhfb1tog)\n- [Apache Tomcat Advisory](https://tomcat.apache.org/security-10.html#Fixed_in_Apache_Tomcat_10.1.45)\n- [Apache Tomcat Advisory](https://tomcat.apache.org/security-11.html#Fixed_in_Apache_Tomcat_11.0.11)\n- [Apache Tomcat Advisory](https://tomcat.apache.org/security-9.html#Fixed_in_Apache_Tomcat_9.0.109)\n- [GitHub Commit](https://github.com/apache/tomcat/commit/130d36d8492ef9e4eb22952c17c92423cb35fd06)\n- [GitHub Commit](https://github.com/apache/tomcat/commit/b5042622b8b78340ae65403c55dcb9c7416924df)\n- [GitHub Commit](https://github.com/apache/tomcat/commit/fec06c610ed7466b401e29cc567a58aee5ed826a)\n- [PoC in GitHub](https://github.com/masahiro331/CVE-2025-55752)\n"
+                "markdown": "## Overview\n[org.apache.tomcat.embed:tomcat-embed-core](https://mvnrepository.com/artifact/org.apache.tomcat.embed/tomcat-embed-core) is a Core Tomcat implementation.\n\nAffected versions of this package are vulnerable to Relative Path Traversal via the URL normalization. An attacker can bypass security constraints and access restricted directories such as `/WEB-INF/` and `/META-INF/` by manipulating the request URI. If PUT requests are also enabled then malicious files could be uploaded leading to remote code execution.\r\n\r\n**Note:**\r\n\r\n1) Older, EOL versions may also be affected.\r\n2) PUT requests are normally limited to trusted users and it is considered unlikely that PUT requests would be enabled in conjunction with a rewrite that manipulated the URI.\n## Remediation\nUpgrade `org.apache.tomcat.embed:tomcat-embed-core` to version 9.0.109, 10.1.45, 11.0.11 or higher.\n## References\n- [Apache Mailing List](https://lists.apache.org/thread/n05kjcwyj1s45ovs8ll1qrrojhfb1tog)\n- [Apache Tomcat Advisory](https://tomcat.apache.org/security-10.html#Fixed_in_Apache_Tomcat_10.1.45)\n- [Apache Tomcat Advisory](https://tomcat.apache.org/security-11.html#Fixed_in_Apache_Tomcat_11.0.11)\n- [Apache Tomcat Advisory](https://tomcat.apache.org/security-9.html#Fixed_in_Apache_Tomcat_9.0.109)\n- [GitHub Commit](https://github.com/apache/tomcat/commit/130d36d8492ef9e4eb22952c17c92423cb35fd06)\n- [GitHub Commit](https://github.com/apache/tomcat/commit/b5042622b8b78340ae65403c55dcb9c7416924df)\n- [GitHub Commit](https://github.com/apache/tomcat/commit/fec06c610ed7466b401e29cc567a58aee5ed826a)\n- [PoC in GitHub](https://github.com/TAM-K592/CVE-2025-55752)\n"
               },
               "defaultConfiguration": {
                 "level": "error"
@@ -2030,6 +1533,131 @@
               }
             },
             {
+              "id": "SNYK-JAVA-ORGAPACHETOMCATEMBED-20302843",
+              "shortDescription": {
+                "text": "Critical severity - Incorrect Authorization vulnerability in org.apache.tomcat.embed:tomcat-embed-core"
+              },
+              "fullDescription": {
+                "text": "(CVE-2026-68525) org.apache.tomcat.embed:tomcat-embed-core@10.1.20"
+              },
+              "help": {
+                "text": "",
+                "markdown": "## Overview\n[org.apache.tomcat.embed:tomcat-embed-core](https://mvnrepository.com/artifact/org.apache.tomcat.embed/tomcat-embed-core) is a Core Tomcat implementation.\n\nAffected versions of this package are vulnerable to Incorrect Authorization via the `FormAuthenticator` and `AuthenticatorBase` FORM authentication flow. An attacker can bypass a security constraint that allows access to a resource for `POST` but not `GET` by authenticating through FORM login and restoring a saved request with a different HTTP method. This lets a request that should be blocked reach the protected resource, exposing content or actions that the user should not be allowed to access with that method.\r\n\r\n**Notes**\r\n\r\n- The issue was fixed in Apache Tomcat 10.1.58, but the release vote for the 10.1.58 release candidate did not pass. Therefore, although users must download 10.1.59 to obtain a version that includes a fix for this issue, version 10.1.58 is not included in the list of affected versions.\n## Remediation\nUpgrade `org.apache.tomcat.embed:tomcat-embed-core` to version 9.0.121, 10.1.58, 11.0.25 or higher.\n## References\n- [Apache Security Advisory](https://lists.apache.org/thread/x1y2lfsgzxwzc456f8954vbvgn03zhd7)\n- [GitHub Commit 10.1.58](https://github.com/apache/tomcat/commit/58123aa468a20e2a079b7e0c68a4009e2475c098)\n- [GitHub Commit 11.0.25](https://github.com/apache/tomcat/commit/10d048e16034ddf12055e0cede0da05b15c823b8)\n- [GitHub Commit 9.0.121](https://github.com/apache/tomcat/commit/32f0c38526b4e655ff0c17cd97afedefc624fe43)\n"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "CWE-863",
+                  "maven"
+                ],
+                "cvssv3_baseScore": 9.3,
+                "security-severity": "9.3"
+              }
+            },
+            {
+              "id": "SNYK-JAVA-ORGAPACHETOMCATEMBED-20302874",
+              "shortDescription": {
+                "text": "Medium severity - Insufficient Session Expiration vulnerability in org.apache.tomcat.embed:tomcat-embed-core"
+              },
+              "fullDescription": {
+                "text": "(CVE-2026-73180) org.apache.tomcat.embed:tomcat-embed-core@10.1.20"
+              },
+              "help": {
+                "text": "",
+                "markdown": "## Overview\n[org.apache.tomcat.embed:tomcat-embed-core](https://mvnrepository.com/artifact/org.apache.tomcat.embed/tomcat-embed-core) is a Core Tomcat implementation.\n\nAffected versions of this package are vulnerable to Insufficient Session Expiration due to the improper termination of WebSocket sessions when the associated HTTP session ends. An attacker can maintain access to resources beyond the intended session duration by establishing a WebSocket connection under an authenticated HTTP session and continuing to interact through the WebSocket after the HTTP session has expired.\r\n\r\n**Note:** This issue was fixed in Apache Tomcat 10.1.58 but the release vote for the 10.1.58 release candidate did not pass. Therefore, although users must download 10.1.59 to obtain a version that includes a fix for this issue, version 10.1.58 is not included in the list of affected versions.\n## Remediation\nUpgrade `org.apache.tomcat.embed:tomcat-embed-core` to version 9.0.121, 10.1.59, 11.0.25 or higher.\n## References\n- [Apache Mailing List](https://lists.apache.org/thread/3j15vztszpyqss253mjq5v1kp7s6hooq)\n- [GitHub Commit](https://github.com/apache/tomcat/commit/e617a5d483b78851d289ca8dc1d68c49b541b419)\n"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "CWE-613",
+                  "maven"
+                ],
+                "cvssv3_baseScore": 5.3,
+                "security-severity": "5.3"
+              }
+            },
+            {
+              "id": "SNYK-JAVA-ORGAPACHETOMCATEMBED-20302889",
+              "shortDescription": {
+                "text": "High severity - Authentication Bypass by Primary Weakness vulnerability in org.apache.tomcat.embed:tomcat-embed-core"
+              },
+              "fullDescription": {
+                "text": "(CVE-2026-68569) org.apache.tomcat.embed:tomcat-embed-core@10.1.20"
+              },
+              "help": {
+                "text": "",
+                "markdown": "## Overview\n[org.apache.tomcat.embed:tomcat-embed-core](https://mvnrepository.com/artifact/org.apache.tomcat.embed/tomcat-embed-core) is a Core Tomcat implementation.\n\nAffected versions of this package are vulnerable to Authentication Bypass by Primary Weakness in the authentication process when using certain authentication mechanisms such as `CLIENT-CERT` or `SPNEGO`. An attacker can gain unauthorized access by authenticating with credentials that do not correspond to a valid user in the `DataSourceRealm`.\r\n\r\n**Note:** This issue was fixed in Apache Tomcat 10.1.58 but the release vote for the 10.1.58 release candidate did not pass. Therefore, although users must download 10.1.59 to obtain a version that includes a fix for this issue, version 10.1.58 is not included in the list of affected versions.\n## Remediation\nUpgrade `org.apache.tomcat.embed:tomcat-embed-core` to version 9.0.121, 10.1.59, 11.0.25 or higher.\n## References\n- [Apache Mailing List](https://lists.apache.org/thread/8robqo76q0osxgw0b5lcwgz0hcf9h4zc)\n- [GitHub Commit](https://github.com/apache/tomcat/commit/790d6e2c3b4cd201a1fa556a23d5b7504dee18ad)\n"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "CWE-305",
+                  "maven"
+                ],
+                "cvssv3_baseScore": 8.7,
+                "security-severity": "8.7"
+              }
+            },
+            {
+              "id": "SNYK-JAVA-ORGAPACHETOMCATEMBED-20304748",
+              "shortDescription": {
+                "text": "High severity - Allocation of Resources Without Limits or Throttling vulnerability in org.apache.tomcat.embed:tomcat-embed-core"
+              },
+              "fullDescription": {
+                "text": "(CVE-2026-68763) org.apache.tomcat.embed:tomcat-embed-core@10.1.20"
+              },
+              "help": {
+                "text": "",
+                "markdown": "## Overview\n[org.apache.tomcat.embed:tomcat-embed-core](https://mvnrepository.com/artifact/org.apache.tomcat.embed/tomcat-embed-core) is a Core Tomcat implementation.\n\nAffected versions of this package are vulnerable to Allocation of Resources Without Limits or Throttling in the HTTP/2 backlog tracking when a stream is reset. An attacker can exhaust system resources by repeatedly resetting streams, leading to service disruption.\r\n\r\n**Note:** This issue was fixed in Apache Tomcat 10.1.58 but the release vote for the 10.1.58 release candidate did not pass. Therefore, although users must download 10.1.59 to obtain a version that includes a fix for this issue, version 10.1.58 is not included in the list of affected versions.\n## Remediation\nUpgrade `org.apache.tomcat.embed:tomcat-embed-core` to version 9.0.121, 10.1.59, 11.0.25 or higher.\n## References\n- [Apache Mailing List](https://lists.apache.org/thread/tv51ty39ppv41v04hdtkp9dp7tg02nzl)\n- [GitHub Commit](https://github.com/apache/tomcat/commit/2a5ec806971627943db18601203129d9c58d959f)\n"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "CWE-770",
+                  "maven"
+                ],
+                "cvssv3_baseScore": 8.7,
+                "security-severity": "8.7"
+              }
+            },
+            {
+              "id": "SNYK-JAVA-ORGAPACHETOMCATEMBED-21249727",
+              "shortDescription": {
+                "text": "Medium severity - Incorrect Authorization vulnerability in org.apache.tomcat.embed:tomcat-embed-core"
+              },
+              "fullDescription": {
+                "text": "(CVE-2026-65182) org.apache.tomcat.embed:tomcat-embed-core@10.1.20"
+              },
+              "help": {
+                "text": "",
+                "markdown": "## Overview\n[org.apache.tomcat.embed:tomcat-embed-core](https://mvnrepository.com/artifact/org.apache.tomcat.embed/tomcat-embed-core) is a Core Tomcat implementation.\n\nAffected versions of this package are vulnerable to Incorrect Authorization in the processing of security constraints when a constraint for a longer path is specified before a more restrictive constraint for a shorter sub-path. An attacker can gain unauthorized access to protected resources by crafting requests that exploit the order of security constraints.\r\n\r\n**Note:** This issue was fixed in Apache Tomcat 10.1.58 but the release vote for the 10.1.58 release candidate did not pass. Therefore, although users must download 10.1.59 to obtain a version that includes a fix for this issue, version 10.1.58 is not included in the list of affected versions.\n## Remediation\nUpgrade `org.apache.tomcat.embed:tomcat-embed-core` to version 9.0.121, 10.1.59, 11.0.25 or higher.\n## References\n- [Apache Mailing List](https://lists.apache.org/thread/joosxvzc9b49ttj8lj0jw9mqt0ml767m)\n- [GitHub Commit](https://github.com/apache/tomcat/commit/10d048e16034ddf12055e0cede0da05b15c823b8)\n"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "CWE-863",
+                  "maven"
+                ],
+                "cvssv3_baseScore": 6.9,
+                "security-severity": "6.9"
+              }
+            },
+            {
               "id": "SNYK-JAVA-ORGAPACHETOMCATEMBED-7430175",
               "shortDescription": {
                 "text": "High severity - Insufficient Session Expiration vulnerability in org.apache.tomcat.embed:tomcat-embed-core"
@@ -2252,6 +1880,106 @@
                 ],
                 "cvssv3_baseScore": 6.9,
                 "security-severity": "6.9"
+              }
+            },
+            {
+              "id": "SNYK-JAVA-ORGAPACHETOMCATEMBED-20302876",
+              "shortDescription": {
+                "text": "Medium severity - Insufficient Session Expiration vulnerability in org.apache.tomcat.embed:tomcat-embed-websocket"
+              },
+              "fullDescription": {
+                "text": "(CVE-2026-73180) org.apache.tomcat.embed:tomcat-embed-websocket@10.1.20"
+              },
+              "help": {
+                "text": "",
+                "markdown": "## Overview\n\nAffected versions of this package are vulnerable to Insufficient Session Expiration due to the improper termination of WebSocket sessions when the associated HTTP session ends. An attacker can maintain access to resources beyond the intended session duration by establishing a WebSocket connection under an authenticated HTTP session and continuing to interact through the WebSocket after the HTTP session has expired.\r\n\r\n**Note:** This issue was fixed in Apache Tomcat 10.1.58 but the release vote for the 10.1.58 release candidate did not pass. Therefore, although users must download 10.1.59 to obtain a version that includes a fix for this issue, version 10.1.58 is not included in the list of affected versions.\n## Remediation\nUpgrade `org.apache.tomcat.embed:tomcat-embed-websocket` to version 9.0.121, 10.1.59, 11.0.25 or higher.\n## References\n- [Apache Mailing List](https://lists.apache.org/thread/3j15vztszpyqss253mjq5v1kp7s6hooq)\n- [GitHub Commit](https://github.com/apache/tomcat/commit/e617a5d483b78851d289ca8dc1d68c49b541b419)\n"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "CWE-613",
+                  "maven"
+                ],
+                "cvssv3_baseScore": 5.3,
+                "security-severity": "5.3"
+              }
+            },
+            {
+              "id": "SNYK-JAVA-ORGAPACHETOMCATEMBED-20552494",
+              "shortDescription": {
+                "text": "Critical severity - Authentication Bypass by Alternate Name vulnerability in org.apache.tomcat.embed:tomcat-embed-websocket"
+              },
+              "fullDescription": {
+                "text": "(CVE-2026-76183) org.apache.tomcat.embed:tomcat-embed-websocket@10.1.20"
+              },
+              "help": {
+                "text": "",
+                "markdown": "## Overview\n\nAffected versions of this package are vulnerable to Authentication Bypass by Alternate Name via the `WebSocket` endpoint security constraint handling. An attacker can gain unauthorized access to protected resources by connecting to endpoints using alternate names.\n## Remediation\nUpgrade `org.apache.tomcat.embed:tomcat-embed-websocket` to version 9.0.122, 10.1.60, 11.0.26 or higher.\n## References\n- [Apache Mailing List](https://lists.apache.org/thread/45mxk8nj2q8pkhct6lfxkvtm2jpywrsp)\n- [GitHub Commit](https://github.com/apache/tomcat/commit/5b48790abd13d94c2bd351027a39a671916b5ddf)\n- [GitHub Commit](https://github.com/apache/tomcat/commit/a93a60a33f4cc202542eb6a0b87b7142d7db311c)\n- [GitHub Commit](https://github.com/apache/tomcat/commit/fa50a173ff3d8d403828441eb450fe6ec63d0955)\n"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "CWE-289",
+                  "maven"
+                ],
+                "cvssv3_baseScore": 9.3,
+                "security-severity": "9.3"
+              }
+            },
+            {
+              "id": "SNYK-JAVA-ORGAPACHETOMCATEMBED-21246252",
+              "shortDescription": {
+                "text": "High severity - Missing Release of Resource after Effective Lifetime vulnerability in org.apache.tomcat.embed:tomcat-embed-websocket"
+              },
+              "fullDescription": {
+                "text": "(CVE-2026-79677) org.apache.tomcat.embed:tomcat-embed-websocket@10.1.20"
+              },
+              "help": {
+                "text": "",
+                "markdown": "## Overview\n\nAffected versions of this package are vulnerable to Missing Release of Resource after Effective Lifetime through the WebSocket write timeout handling in `org.apache.tomcat.websocket.WsRemoteEndpointImplBase`, `WsRemoteEndpointImplClient`, `WsRemoteEndpointImplServer`, and `MessagePart`. An attacker can keep asynchronous WebSocket sends from timing out by sending message fragments or consecutive writes that reuse the same timeout, causing the timeout state to be lost during write processing. When this happens, the server can keep waiting on stalled WebSocket writes instead of aborting them, tying up resources and eventually preventing the application from serving other requests.\n## Remediation\nUpgrade `org.apache.tomcat.embed:tomcat-embed-websocket` to version 11.0.26, 10.1.60, 9.0.122 or higher.\n## References\n- [Apache Security Advisory](https://lists.apache.org/thread/bzwps6ck4szf2hmksbbon3syyl9qnkv8)\n- [GitHub Commit 10.1.60](https://github.com/apache/tomcat/commit/df2f47fe32c4bd528af8b1db099c6710f34d9d5f)\n- [GitHub Commit 11.0.26](https://github.com/apache/tomcat/commit/39edac61dde6b5cd7f88a1d3a35fa9d93fdc3a3e)\n- [GitHub Commit 9.0.122](https://github.com/apache/tomcat/commit/58fdf6df55d38c7b8b0d02568e3d52b07a9774c3)\n"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "CWE-772",
+                  "maven"
+                ],
+                "cvssv3_baseScore": 8.7,
+                "security-severity": "8.7"
+              }
+            },
+            {
+              "id": "SNYK-JAVA-ORGAPACHETOMCATEMBED-21249759",
+              "shortDescription": {
+                "text": "High severity - Denial of Service (DoS) vulnerability in org.apache.tomcat.embed:tomcat-embed-websocket"
+              },
+              "fullDescription": {
+                "text": "(CVE-2026-77791) org.apache.tomcat.embed:tomcat-embed-websocket@10.1.20"
+              },
+              "help": {
+                "text": "",
+                "markdown": "## Overview\n\nAffected versions of this package are vulnerable to Denial of Service (DoS) via busy wait during WebSocket close.\n\n## Details\n\nDenial of Service (DoS) describes a family of attacks, all aimed at making a system inaccessible to its intended and legitimate users.\n\nUnlike other vulnerabilities, DoS attacks usually do not aim at breaching security. Rather, they are focused on making websites and services unavailable to genuine users resulting in downtime.\n\nOne popular Denial of Service vulnerability is DDoS (a Distributed Denial of Service), an attack that attempts to clog network pipes to the system by generating a large volume of traffic from many machines.\n\nWhen it comes to open source libraries, DoS vulnerabilities allow attackers to trigger such a crash or crippling of the service by using a flaw either in the application code or from the use of open source libraries.\n\nTwo common types of DoS vulnerabilities:\n\n* High CPU/Memory Consumption- An attacker sending crafted requests that could cause the system to take a disproportionate amount of time to process. For example, [commons-fileupload:commons-fileupload](https://security.snyk.io/vuln/SNYK-JAVA-COMMONSFILEUPLOAD-30082).\n\n* Crash - An attacker sending crafted requests that could cause the system to crash. For Example,  [npm `ws` package](https://snyk.io/vuln/npm:ws:20171108)\n\n## Remediation\nUpgrade `org.apache.tomcat.embed:tomcat-embed-websocket` to version 9.0.121, 10.1.59, 11.0.25 or higher.\n## References\n- [Apache Mailing List](https://lists.apache.org/thread/mb1pjjooqytrl6hbvbt3rw1lqwlon4cz)\n- [Apache Tomcat Advisory](https://tomcat.apache.org/security-10.html)\n- [Apache Tomcat Advisory](https://tomcat.apache.org/security-11.html)\n- [Apache Tomcat Advisory](https://tomcat.apache.org/security-9.html)\n- [GitHub Commit](https://github.com/apache/tomcat/commit/7a5945f1de1d3310214234dfbbd7c569af52d058)\n- [GitHub Commit](https://github.com/apache/tomcat/commit/ce291bbc65393e3bfbec2a8d23fcee0106a1ade9)\n- [GitHub Commit](https://github.com/apache/tomcat/commit/e896f73c868f66dfb2a93565fda4d13cd5909d2d)\n"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "CWE-400",
+                  "maven"
+                ],
+                "cvssv3_baseScore": 8.7,
+                "security-severity": "8.7"
               }
             },
             {
@@ -3505,6 +3233,54 @@
           ]
         },
         {
+          "ruleId": "SNYK-JAVA-CHQOSLOGBACK-17282376",
+          "level": "warning",
+          "message": {
+            "text": "This file introduces a vulnerable ch.qos.logback:logback-core package with a medium severity vulnerability."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "ch.qos.logback:logback-core@1.4.14"
+                }
+              ]
+            }
+          ],
+          "fixes": [
+            {
+              "description": {
+                "text": "Upgrade to ch.qos.logback:logback-core@1.5.34"
+              },
+              "artifactChanges": [
+                {
+                  "artifactLocation": {
+                    "uri": "/"
+                  },
+                  "replacements": [
+                    {
+                      "deletedRegion": {
+                        "startLine": 1
+                      },
+                      "insertedContent": {
+                        "text": "ch.qos.logback:logback-core@1.5.34"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
           "ruleId": "SNYK-JAVA-CHQOSLOGBACK-17675439",
           "level": "error",
           "message": {
@@ -3745,6 +3521,102 @@
           ]
         },
         {
+          "ruleId": "SNYK-JAVA-CHQOSLOGBACK-19882330",
+          "level": "warning",
+          "message": {
+            "text": "This file introduces a vulnerable ch.qos.logback:logback-classic package with a medium severity vulnerability."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "ch.qos.logback:logback-classic@1.4.14"
+                }
+              ]
+            }
+          ],
+          "fixes": [
+            {
+              "description": {
+                "text": "Upgrade to ch.qos.logback:logback-classic@1.6.3"
+              },
+              "artifactChanges": [
+                {
+                  "artifactLocation": {
+                    "uri": "/"
+                  },
+                  "replacements": [
+                    {
+                      "deletedRegion": {
+                        "startLine": 1
+                      },
+                      "insertedContent": {
+                        "text": "ch.qos.logback:logback-classic@1.6.3"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-JAVA-CHQOSLOGBACK-20824362",
+          "level": "warning",
+          "message": {
+            "text": "This file introduces a vulnerable ch.qos.logback:logback-classic package with a medium severity vulnerability."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "ch.qos.logback:logback-classic@1.4.14"
+                }
+              ]
+            }
+          ],
+          "fixes": [
+            {
+              "description": {
+                "text": "Upgrade to ch.qos.logback:logback-classic@1.6.5"
+              },
+              "artifactChanges": [
+                {
+                  "artifactLocation": {
+                    "uri": "/"
+                  },
+                  "replacements": [
+                    {
+                      "deletedRegion": {
+                        "startLine": 1
+                      },
+                      "insertedContent": {
+                        "text": "ch.qos.logback:logback-classic@1.6.5"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
           "ruleId": "SNYK-JAVA-CHQOSLOGBACK-8539867",
           "level": "warning",
           "message": {
@@ -3928,6 +3800,54 @@
                       },
                       "insertedContent": {
                         "text": "com.fasterxml.jackson.core:jackson-core@2.18.8"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-JAVA-COMFASTERXMLJACKSONCORE-20059179",
+          "level": "error",
+          "message": {
+            "text": "This file introduces a vulnerable com.fasterxml.jackson.core:jackson-core package with a high severity vulnerability."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "com.fasterxml.jackson.core:jackson-core@2.15.4"
+                }
+              ]
+            }
+          ],
+          "fixes": [
+            {
+              "description": {
+                "text": "Upgrade to com.fasterxml.jackson.core:jackson-core@2.18.11"
+              },
+              "artifactChanges": [
+                {
+                  "artifactLocation": {
+                    "uri": "/"
+                  },
+                  "replacements": [
+                    {
+                      "deletedRegion": {
+                        "startLine": 1
+                      },
+                      "insertedContent": {
+                        "text": "com.fasterxml.jackson.core:jackson-core@2.18.11"
                       }
                     }
                   ]
@@ -4216,6 +4136,246 @@
                       },
                       "insertedContent": {
                         "text": "com.fasterxml.jackson.core:jackson-databind@2.18.9"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-JAVA-COMFASTERXMLJACKSONCORE-19477042",
+          "level": "warning",
+          "message": {
+            "text": "This file introduces a vulnerable com.fasterxml.jackson.core:jackson-databind package with a medium severity vulnerability."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "com.fasterxml.jackson.core:jackson-databind@2.15.4"
+                }
+              ]
+            }
+          ],
+          "fixes": [
+            {
+              "description": {
+                "text": "Upgrade to com.fasterxml.jackson.core:jackson-databind@2.18.10"
+              },
+              "artifactChanges": [
+                {
+                  "artifactLocation": {
+                    "uri": "/"
+                  },
+                  "replacements": [
+                    {
+                      "deletedRegion": {
+                        "startLine": 1
+                      },
+                      "insertedContent": {
+                        "text": "com.fasterxml.jackson.core:jackson-databind@2.18.10"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-JAVA-COMFASTERXMLJACKSONCORE-19496766",
+          "level": "warning",
+          "message": {
+            "text": "This file introduces a vulnerable com.fasterxml.jackson.core:jackson-databind package with a medium severity vulnerability."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "com.fasterxml.jackson.core:jackson-databind@2.15.4"
+                }
+              ]
+            }
+          ],
+          "fixes": [
+            {
+              "description": {
+                "text": "Upgrade to com.fasterxml.jackson.core:jackson-databind@2.18.10"
+              },
+              "artifactChanges": [
+                {
+                  "artifactLocation": {
+                    "uri": "/"
+                  },
+                  "replacements": [
+                    {
+                      "deletedRegion": {
+                        "startLine": 1
+                      },
+                      "insertedContent": {
+                        "text": "com.fasterxml.jackson.core:jackson-databind@2.18.10"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-JAVA-COMFASTERXMLJACKSONCORE-19778370",
+          "level": "error",
+          "message": {
+            "text": "This file introduces a vulnerable com.fasterxml.jackson.core:jackson-databind package with a high severity vulnerability."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "com.fasterxml.jackson.core:jackson-databind@2.15.4"
+                }
+              ]
+            }
+          ],
+          "fixes": [
+            {
+              "description": {
+                "text": "Upgrade to com.fasterxml.jackson.core:jackson-databind@2.18.10"
+              },
+              "artifactChanges": [
+                {
+                  "artifactLocation": {
+                    "uri": "/"
+                  },
+                  "replacements": [
+                    {
+                      "deletedRegion": {
+                        "startLine": 1
+                      },
+                      "insertedContent": {
+                        "text": "com.fasterxml.jackson.core:jackson-databind@2.18.10"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-JAVA-COMFASTERXMLJACKSONCORE-20059683",
+          "level": "error",
+          "message": {
+            "text": "This file introduces a vulnerable com.fasterxml.jackson.core:jackson-databind package with a high severity vulnerability."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "com.fasterxml.jackson.core:jackson-databind@2.15.4"
+                }
+              ]
+            }
+          ],
+          "fixes": [
+            {
+              "description": {
+                "text": "Upgrade to com.fasterxml.jackson.core:jackson-databind@2.18.11"
+              },
+              "artifactChanges": [
+                {
+                  "artifactLocation": {
+                    "uri": "/"
+                  },
+                  "replacements": [
+                    {
+                      "deletedRegion": {
+                        "startLine": 1
+                      },
+                      "insertedContent": {
+                        "text": "com.fasterxml.jackson.core:jackson-databind@2.18.11"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-JAVA-COMFASTERXMLJACKSONCORE-20059685",
+          "level": "warning",
+          "message": {
+            "text": "This file introduces a vulnerable com.fasterxml.jackson.core:jackson-databind package with a medium severity vulnerability."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "com.fasterxml.jackson.core:jackson-databind@2.15.4"
+                }
+              ]
+            }
+          ],
+          "fixes": [
+            {
+              "description": {
+                "text": "Upgrade to com.fasterxml.jackson.core:jackson-databind@2.18.11"
+              },
+              "artifactChanges": [
+                {
+                  "artifactLocation": {
+                    "uri": "/"
+                  },
+                  "replacements": [
+                    {
+                      "deletedRegion": {
+                        "startLine": 1
+                      },
+                      "insertedContent": {
+                        "text": "com.fasterxml.jackson.core:jackson-databind@2.18.11"
                       }
                     }
                   ]
@@ -5857,6 +6017,246 @@
           ]
         },
         {
+          "ruleId": "SNYK-JAVA-ORGAPACHETOMCATEMBED-20302843",
+          "level": "error",
+          "message": {
+            "text": "This file introduces a vulnerable org.apache.tomcat.embed:tomcat-embed-core package with a critical severity vulnerability."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "org.apache.tomcat.embed:tomcat-embed-core@10.1.20"
+                }
+              ]
+            }
+          ],
+          "fixes": [
+            {
+              "description": {
+                "text": "Upgrade to org.apache.tomcat.embed:tomcat-embed-core@10.1.59"
+              },
+              "artifactChanges": [
+                {
+                  "artifactLocation": {
+                    "uri": "/"
+                  },
+                  "replacements": [
+                    {
+                      "deletedRegion": {
+                        "startLine": 1
+                      },
+                      "insertedContent": {
+                        "text": "org.apache.tomcat.embed:tomcat-embed-core@10.1.59"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-JAVA-ORGAPACHETOMCATEMBED-20302874",
+          "level": "warning",
+          "message": {
+            "text": "This file introduces a vulnerable org.apache.tomcat.embed:tomcat-embed-core package with a medium severity vulnerability."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "org.apache.tomcat.embed:tomcat-embed-core@10.1.20"
+                }
+              ]
+            }
+          ],
+          "fixes": [
+            {
+              "description": {
+                "text": "Upgrade to org.apache.tomcat.embed:tomcat-embed-core@10.1.59"
+              },
+              "artifactChanges": [
+                {
+                  "artifactLocation": {
+                    "uri": "/"
+                  },
+                  "replacements": [
+                    {
+                      "deletedRegion": {
+                        "startLine": 1
+                      },
+                      "insertedContent": {
+                        "text": "org.apache.tomcat.embed:tomcat-embed-core@10.1.59"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-JAVA-ORGAPACHETOMCATEMBED-20302889",
+          "level": "error",
+          "message": {
+            "text": "This file introduces a vulnerable org.apache.tomcat.embed:tomcat-embed-core package with a high severity vulnerability."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "org.apache.tomcat.embed:tomcat-embed-core@10.1.20"
+                }
+              ]
+            }
+          ],
+          "fixes": [
+            {
+              "description": {
+                "text": "Upgrade to org.apache.tomcat.embed:tomcat-embed-core@10.1.59"
+              },
+              "artifactChanges": [
+                {
+                  "artifactLocation": {
+                    "uri": "/"
+                  },
+                  "replacements": [
+                    {
+                      "deletedRegion": {
+                        "startLine": 1
+                      },
+                      "insertedContent": {
+                        "text": "org.apache.tomcat.embed:tomcat-embed-core@10.1.59"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-JAVA-ORGAPACHETOMCATEMBED-20304748",
+          "level": "error",
+          "message": {
+            "text": "This file introduces a vulnerable org.apache.tomcat.embed:tomcat-embed-core package with a high severity vulnerability."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "org.apache.tomcat.embed:tomcat-embed-core@10.1.20"
+                }
+              ]
+            }
+          ],
+          "fixes": [
+            {
+              "description": {
+                "text": "Upgrade to org.apache.tomcat.embed:tomcat-embed-core@10.1.59"
+              },
+              "artifactChanges": [
+                {
+                  "artifactLocation": {
+                    "uri": "/"
+                  },
+                  "replacements": [
+                    {
+                      "deletedRegion": {
+                        "startLine": 1
+                      },
+                      "insertedContent": {
+                        "text": "org.apache.tomcat.embed:tomcat-embed-core@10.1.59"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-JAVA-ORGAPACHETOMCATEMBED-21249727",
+          "level": "warning",
+          "message": {
+            "text": "This file introduces a vulnerable org.apache.tomcat.embed:tomcat-embed-core package with a medium severity vulnerability."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "org.apache.tomcat.embed:tomcat-embed-core@10.1.20"
+                }
+              ]
+            }
+          ],
+          "fixes": [
+            {
+              "description": {
+                "text": "Upgrade to org.apache.tomcat.embed:tomcat-embed-core@10.1.59"
+              },
+              "artifactChanges": [
+                {
+                  "artifactLocation": {
+                    "uri": "/"
+                  },
+                  "replacements": [
+                    {
+                      "deletedRegion": {
+                        "startLine": 1
+                      },
+                      "insertedContent": {
+                        "text": "org.apache.tomcat.embed:tomcat-embed-core@10.1.59"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
           "ruleId": "SNYK-JAVA-ORGAPACHETOMCATEMBED-7430175",
           "level": "error",
           "message": {
@@ -6280,6 +6680,198 @@
                       },
                       "insertedContent": {
                         "text": "org.apache.tomcat.embed:tomcat-embed-websocket@10.1.55"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-JAVA-ORGAPACHETOMCATEMBED-20302876",
+          "level": "warning",
+          "message": {
+            "text": "This file introduces a vulnerable org.apache.tomcat.embed:tomcat-embed-websocket package with a medium severity vulnerability."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "org.apache.tomcat.embed:tomcat-embed-websocket@10.1.20"
+                }
+              ]
+            }
+          ],
+          "fixes": [
+            {
+              "description": {
+                "text": "Upgrade to org.apache.tomcat.embed:tomcat-embed-websocket@10.1.59"
+              },
+              "artifactChanges": [
+                {
+                  "artifactLocation": {
+                    "uri": "/"
+                  },
+                  "replacements": [
+                    {
+                      "deletedRegion": {
+                        "startLine": 1
+                      },
+                      "insertedContent": {
+                        "text": "org.apache.tomcat.embed:tomcat-embed-websocket@10.1.59"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-JAVA-ORGAPACHETOMCATEMBED-20552494",
+          "level": "error",
+          "message": {
+            "text": "This file introduces a vulnerable org.apache.tomcat.embed:tomcat-embed-websocket package with a critical severity vulnerability."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "org.apache.tomcat.embed:tomcat-embed-websocket@10.1.20"
+                }
+              ]
+            }
+          ],
+          "fixes": [
+            {
+              "description": {
+                "text": "Upgrade to org.apache.tomcat.embed:tomcat-embed-websocket@10.1.60"
+              },
+              "artifactChanges": [
+                {
+                  "artifactLocation": {
+                    "uri": "/"
+                  },
+                  "replacements": [
+                    {
+                      "deletedRegion": {
+                        "startLine": 1
+                      },
+                      "insertedContent": {
+                        "text": "org.apache.tomcat.embed:tomcat-embed-websocket@10.1.60"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-JAVA-ORGAPACHETOMCATEMBED-21246252",
+          "level": "error",
+          "message": {
+            "text": "This file introduces a vulnerable org.apache.tomcat.embed:tomcat-embed-websocket package with a high severity vulnerability."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "org.apache.tomcat.embed:tomcat-embed-websocket@10.1.20"
+                }
+              ]
+            }
+          ],
+          "fixes": [
+            {
+              "description": {
+                "text": "Upgrade to org.apache.tomcat.embed:tomcat-embed-websocket@10.1.60"
+              },
+              "artifactChanges": [
+                {
+                  "artifactLocation": {
+                    "uri": "/"
+                  },
+                  "replacements": [
+                    {
+                      "deletedRegion": {
+                        "startLine": 1
+                      },
+                      "insertedContent": {
+                        "text": "org.apache.tomcat.embed:tomcat-embed-websocket@10.1.60"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-JAVA-ORGAPACHETOMCATEMBED-21249759",
+          "level": "error",
+          "message": {
+            "text": "This file introduces a vulnerable org.apache.tomcat.embed:tomcat-embed-websocket package with a high severity vulnerability."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "org.apache.tomcat.embed:tomcat-embed-websocket@10.1.20"
+                }
+              ]
+            }
+          ],
+          "fixes": [
+            {
+              "description": {
+                "text": "Upgrade to org.apache.tomcat.embed:tomcat-embed-websocket@10.1.59"
+              },
+              "artifactChanges": [
+                {
+                  "artifactLocation": {
+                    "uri": "/"
+                  },
+                  "replacements": [
+                    {
+                      "deletedRegion": {
+                        "startLine": 1
+                      },
+                      "insertedContent": {
+                        "text": "org.apache.tomcat.embed:tomcat-embed-websocket@10.1.59"
                       }
                     }
                   ]
@@ -8498,15 +9090,15 @@
         }
       ],
       "automationDetails": {
-        "id": "Snyk/Container/docker.io/alexsotoharness/tangerine-spring-boot-sample:52fe08e://1/2026-08-26T21:06:21.521Z"
+        "id": "Snyk/Container/docker.io/alexsotoharness/tangerine-spring-boot-sample:f6a9fcd://1/2026-10-22T15:40:46.529Z"
       }
     },
     {
       "tool": {
         "driver": {
           "name": "Snyk Container",
-          "semanticVersion": "1.1307.0",
-          "version": "1.1307.0",
+          "semanticVersion": "1.1308.2",
+          "version": "1.1308.2",
           "informationUri": "https://docs.snyk.io/",
           "properties": {
             "artifactsScanned": 0
@@ -8516,7 +9108,7 @@
       },
       "results": [],
       "automationDetails": {
-        "id": "Snyk/Container/docker.io/alexsotoharness/tangerine-spring-boot-sample:52fe08e:/opt/java/openjdk/lib/2/2026-08-26T21:06:21.522Z"
+        "id": "Snyk/Container/docker.io/alexsotoharness/tangerine-spring-boot-sample:f6a9fcd:/opt/java/openjdk/lib/2/2026-10-22T15:40:46.529Z"
       }
     }
   ]
