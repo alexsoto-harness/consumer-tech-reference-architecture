@@ -1,4 +1,4 @@
-# Tangerine Spring Boot Sample
+# Tangerine Spring Boot Sample.
 
 A Spring Boot reference application demonstrating a complete CI/CD pipeline with GitHub Actions and Harness.
 
