@@ -4,6 +4,13 @@ on:
   push:
   #pull_request:
     branches: [ main ]
+    # Manifest-only changes deploy via the Harness Commit_to_main trigger instead
+    paths-ignore:
+      - 'k8s/**'
+      - 'docs/**'
+      - '.harness/**'
+      - 'README.md'
+      - 'mkdocs.yml'
   workflow_dispatch:
 
 permissions:
@@ -39,6 +46,8 @@ jobs:
           SHORT_SHA=${GITHUB_SHA::7}
           docker build -t docker.io/$DOCKERHUB_USERNAME/$PROJECT_NAME:$SHORT_SHA .
           docker push docker.io/$DOCKERHUB_USERNAME/$PROJECT_NAME:$SHORT_SHA
+          docker tag docker.io/$DOCKERHUB_USERNAME/$PROJECT_NAME:$SHORT_SHA docker.io/$DOCKERHUB_USERNAME/$PROJECT_NAME:latest
+          docker push docker.io/$DOCKERHUB_USERNAME/$PROJECT_NAME:latest
 
       - name: Upload SBOM artifact
         uses: actions/upload-artifact@v4
