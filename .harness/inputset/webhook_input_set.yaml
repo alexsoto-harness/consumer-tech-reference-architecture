@@ -5,7 +5,7 @@ inputSet:
   orgIdentifier: sandbox
   projectIdentifier: soto_sandbox
   pipeline:
-    identifier: tang
+    identifier: consumer_tech_ra
     variables:
       - name: repo_name
         type: String

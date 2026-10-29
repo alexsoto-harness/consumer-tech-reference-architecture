@@ -1,4 +1,4 @@
-# Tangerine Spring Boot Sample.
+# Consumer Tech Spring Boot Sample
 
 A Spring Boot reference application demonstrating a complete CI/CD pipeline with GitHub Actions and Harness.
 
@@ -6,9 +6,9 @@ A Spring Boot reference application demonstrating a complete CI/CD pipeline with
 
 - **Spring Boot App** (Java 17, Maven)
 - **Dockerfile** for containerization
-- **Kubernetes manifests** for GKE deployment
+- **Kubernetes manifests** for deployment
 - **GitHub Actions CI** for build, scan, and artifact signing
-- **Harness CD** for deployment to GKE
+- **Harness CD** for deployment to Kubernetes
 
 ---
 
@@ -53,7 +53,7 @@ Harness handles:
 - **Security scan ingestion via STO**
 - **SLSA provenance generation and attestation**
 - **SLSA verification before deployment**
-- **Kubernetes deployment to GKE**
+- **Kubernetes deployment**
 - **Governance and compliancevia OPA policies**
 
 
@@ -75,26 +75,26 @@ The `.harness/` folder contains Harness entity definitions:
 
 ### Pipelines
 
-- **`pipeline/tang.yaml`** - Main CD pipeline (Tangerine Reference Architecture)
+- **`pipeline/consumer_tech_ra.yaml`** - Main CD pipeline (Consumer Tech Reference Architecture)
   - Audit stage - Logs trigger payload
   - Security scan ingestion via STO
   - SLSA verification
-  - Deployment to GKE environments
+  - Deployment to UAT and PROD environments
 
-- **`pipeline/Tangerine_Artifact_Signature.yaml`** - Artifact signing pipeline
+- **`pipeline/Consumer_Tech_Artifact_Signature.yaml`** - Artifact signing pipeline
   - SLSA provenance generation and attestation
   - Triggered via webhook from GitHub Actions
 
 ### Service
 
-- **`service/Tangerine_Sample.yaml`** - Kubernetes service definition
+- **`service/Consumer_Tech_Sample.yaml`** - Kubernetes service definition
   - References k8s manifests from GitHub
   - DockerHub artifact source with pipeline variables
 
 ### Environments
 
-- **`environment/mock_gke_tangerine/`** - Pre-production environment
-- **`environment/prod_gke_tangerine/`** - Production environment
+- **`environment/uat_wells_fargo/`** - Pre-production environment
+- **`environment/prod_wells_fargo/`** - Production environment
 
 ### Input Sets
 
@@ -113,5 +113,5 @@ mvn clean install
 mvn spring-boot:run
 
 # Build Docker image
-docker build -t tangerine-spring-boot-sample .
+docker build -t consumer-tech-spring-boot-sample .
 ```

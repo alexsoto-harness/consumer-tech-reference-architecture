@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project Velocity | Tangerine Reference Architecture</title>
+    <title>DevOps 2.0 | Consumer Tech Reference Architecture</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -13,11 +13,12 @@
                 extend: {
                     fontFamily: { sans: ['Inter', 'sans-serif'] },
                     colors: {
-                        tangerine: {
-                            50: '#fff7ed', 100: '#ffedd5', 200: '#fed7aa', 300: '#fdba74',
-                            400: '#fb923c', 500: '#f97316', 600: '#ea580c', 700: '#c2410c',
-                            800: '#9a3412', 900: '#7c2d12'
-                        }
+                        wf: {
+                            50: '#fdf2f2', 100: '#fbe2e3', 200: '#f6c3c5', 300: '#ee9296',
+                            400: '#e2545b', 500: '#d71e28', 600: '#b5161f', 700: '#93121a',
+                            800: '#7a1016', 900: '#5e0c11'
+                        },
+                        wfgold: { 300: '#ffdc7a', 400: '#ffcd41', 500: '#f2b800' }
                     }
                 }
             }
@@ -26,36 +27,36 @@
     <style>
         .pipeline-node { transition: all 0.3s ease; cursor: pointer; }
         .pipeline-node:hover { transform: translateY(-4px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
-        .pipeline-node.active { border-color: #f97316; background-color: #fff7ed; box-shadow: 0 0 0 4px rgba(249,115,22,0.2); }
+        .pipeline-node.active { border-color: #d71e28; background-color: #fdf2f2; box-shadow: 0 0 0 4px rgba(215,30,40,0.2); }
         #detail-panel { transition: opacity 0.3s ease; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
-<body class="bg-gray-50 text-slate-800 font-sans antialiased selection:bg-tangerine-100 selection:text-tangerine-700">
+<body class="bg-gray-50 text-slate-800 font-sans antialiased selection:bg-wf-100 selection:text-wf-700">
 
     <!-- Tailwind safelist for dynamic JS classes -->
-    <div class="hidden bg-rose-50 border-rose-100 text-rose-800 text-rose-900 bg-rose-100 bg-tangerine-50 border-tangerine-100 text-tangerine-800 text-tangerine-900 text-green-500 bg-gray-100"></div>
+    <div class="hidden bg-rose-50 border-rose-100 text-rose-800 text-rose-900 bg-rose-100 bg-wf-50 border-wf-100 text-wf-800 text-wf-900 text-green-500 bg-gray-100"></div>
 
     <!-- Header -->
     <header class="bg-white border-b border-gray-200 sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
             <div class="flex items-center gap-4">
-                <div class="bg-tangerine-500 text-white p-2.5 rounded-lg">
+                <div class="bg-wf-500 text-white p-2.5 rounded-lg">
                     <i class="fa-solid fa-layer-group text-xl"></i>
                 </div>
                 <div>
-                    <h1 class="text-2xl font-bold text-slate-900">Project Velocity <span class="text-gray-400 font-normal">| Reference Architecture</span></h1>
-                    <p class="text-sm text-gray-500">GitHub Actions + Harness CD &mdash; GKE Deployment Best Practices</p>
+                    <h1 class="text-2xl font-bold text-slate-900">DevOps 2.0 <span class="text-gray-400 font-normal">| Reference Architecture</span></h1>
+                    <p class="text-sm text-gray-500">GitHub Actions + Harness CD &mdash; Kubernetes Deployment Best Practices</p>
                 </div>
             </div>
             <div class="hidden md:flex items-center gap-3">
                 <a href="https://excalidraw.com/#room=8d82df52e939e6a949d0,xzHYLWWtNoAzpkzax7qe1g" target="_blank"
-                   class="text-sm text-tangerine-600 hover:text-tangerine-700 font-medium flex items-center gap-1.5">
+                   class="text-sm text-wf-600 hover:text-wf-700 font-medium flex items-center gap-1.5">
                     <i class="fa-solid fa-diagram-project"></i> Architecture Diagram
                 </a>
                 <span class="text-gray-300">|</span>
-                <span class="text-xs text-gray-400">Deployed with <strong class="text-tangerine-600">Harness.io</strong></span>
+                <span class="text-xs text-gray-400">Deployed with <strong class="text-wf-600">Harness.io</strong></span>
             </div>
         </div>
     </header>
@@ -67,9 +68,9 @@
             <h2 class="text-3xl font-bold text-slate-900 mb-4">End-to-End Delivery Pipeline</h2>
             <p class="text-gray-600 leading-relaxed">
                 This reference architecture demonstrates a complete software delivery pipeline for
-                <strong class="text-tangerine-600">Tangerine</strong>, integrating
+                <strong class="text-wf-600">Consumer Tech</strong>, integrating
                 <strong>GitHub Actions</strong> for CI with <strong>Harness</strong> for continuous delivery,
-                security orchestration, and governance; from commit to production on GKE.
+                security orchestration, and governance; from commit to production on Kubernetes.
             </p>
         </section>
 
@@ -94,8 +95,8 @@
                 </div>
 
                 <!-- Arrow: Webhook Handoff -->
-                <div class="hidden md:flex flex-col justify-center items-center text-tangerine-500 relative px-2">
-                    <div class="absolute -top-6 w-max text-xs font-bold tracking-wider uppercase text-tangerine-400">Webhook</div>
+                <div class="hidden md:flex flex-col justify-center items-center text-wf-500 relative px-2">
+                    <div class="absolute -top-6 w-max text-xs font-bold tracking-wider uppercase text-wfgold-500">Webhook</div>
                     <i class="fa-solid fa-angles-right text-3xl animate-pulse"></i>
                 </div>
 
@@ -122,14 +123,14 @@
 
                 <!-- Stage 3: Deploy -->
                 <div onclick="selectStage('deploy')" id="node-deploy"
-                     class="pipeline-node flex-1 bg-white border-2 border-tangerine-200 rounded-xl p-6 min-w-[200px] flex flex-col gap-3 group hover:border-tangerine-500">
+                     class="pipeline-node flex-1 bg-white border-2 border-wf-200 rounded-xl p-6 min-w-[200px] flex flex-col gap-3 group hover:border-wf-500">
                     <div class="flex items-center justify-between mb-2">
-                        <span class="bg-tangerine-100 text-tangerine-700 text-xs font-bold px-2 py-1 rounded">CD (HARNESS)</span>
-                        <i class="fa-solid fa-rocket text-2xl text-tangerine-400 group-hover:text-tangerine-600 transition-colors"></i>
+                        <span class="bg-wf-100 text-wf-700 text-xs font-bold px-2 py-1 rounded">CD (HARNESS)</span>
+                        <i class="fa-solid fa-rocket text-2xl text-wf-400 group-hover:text-wf-600 transition-colors"></i>
                     </div>
                     <h4 class="font-bold text-slate-800">Deploy &amp; Verify</h4>
                     <ul class="text-sm text-gray-500 space-y-1">
-                        <li><i class="fa-solid fa-server w-5"></i> Blue/Green to GKE</li>
+                        <li><i class="fa-solid fa-server w-5"></i> Blue/Green to Kubernetes</li>
                         <li><i class="fa-solid fa-chart-line w-5"></i> Continuous Verification</li>
                         <li><i class="fa-solid fa-vial w-5"></i> Selenium + Playwright</li>
                     </ul>
@@ -183,7 +184,7 @@ curl -X POST \
   --url "${HARNESS_WEBHOOK_URL}" \
   -d '{
     "image_full": "index.docker.io/...:abc1234",
-    "image_name": "tangerine-spring-boot-sample",
+    "image_name": "consumer-tech-spring-boot-sample",
     "image_tag": "abc1234",
     "sha": "...", "branch": "main",
     "commit_message": "...",
@@ -257,7 +258,7 @@ curl -X POST \
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
                 <div class="bg-white p-5 rounded-xl border border-gray-100 shadow-sm">
-                    <div class="bg-tangerine-50 text-tangerine-600 w-10 h-10 rounded-lg flex items-center justify-center mb-3">
+                    <div class="bg-wf-50 text-wf-600 w-10 h-10 rounded-lg flex items-center justify-center mb-3">
                         <i class="fa-solid fa-link"></i>
                     </div>
                     <h4 class="font-bold text-slate-800 mb-1">Supply Chain Security</h4>
@@ -331,11 +332,11 @@ curl -X POST \
         </section>
 
         <!-- Excalidraw Callout -->
-        <section class="bg-gradient-to-r from-tangerine-500 to-tangerine-600 rounded-2xl p-8 text-white text-center">
+        <section class="bg-gradient-to-r from-wf-500 to-wf-600 rounded-2xl p-8 text-white text-center">
             <h3 class="text-xl font-bold mb-2">Explore the Full Architecture Diagram</h3>
-            <p class="text-tangerine-100 mb-4">Interactive diagram showing the complete CI/CD flow from commit to production on GKE.</p>
+            <p class="text-wfgold-300 mb-4">Interactive diagram showing the complete CI/CD flow from commit to production on Kubernetes.</p>
             <a href="https://excalidraw.com/#room=8d82df52e939e6a949d0,xzHYLWWtNoAzpkzax7qe1g" target="_blank"
-               class="inline-flex items-center gap-2 bg-white text-tangerine-600 font-bold px-6 py-3 rounded-lg hover:bg-tangerine-50 transition-colors">
+               class="inline-flex items-center gap-2 bg-white text-wf-600 font-bold px-6 py-3 rounded-lg hover:bg-wf-50 transition-colors">
                 <i class="fa-solid fa-diagram-project"></i> Open in Excalidraw
             </a>
         </section>
@@ -347,12 +348,12 @@ curl -X POST \
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <div class="flex flex-col md:flex-row justify-between items-center gap-4">
                 <div>
-                    <p class="text-sm"><strong class="text-white">Project Velocity</strong> &mdash; Reference Architecture</p>
+                    <p class="text-sm"><strong class="text-white">DevOps 2.0</strong> &mdash; Reference Architecture</p>
                     <p class="text-xs mt-1">This is a reference implementation demonstrating Harness platform capabilities. Scanner and tool choices are illustrative &mdash; Harness is tool-agnostic.</p>
                 </div>
                 <div class="text-right text-xs">
-                    <p>Built and deployed with <strong class="text-tangerine-400">Harness.io</strong></p>
-                    <p class="text-gray-500 mt-1">&copy; 2026 Tangerine &bull; Harness Reference Architecture</p>
+                    <p>Built and deployed with <strong class="text-wfgold-400">Harness.io</strong></p>
+                    <p class="text-gray-500 mt-1">&copy; 2026 Consumer Tech &bull; Harness Reference Architecture</p>
                 </div>
             </div>
         </div>
@@ -437,13 +438,13 @@ curl -X POST \
         },
         deploy: {
             title: "Deploy &amp; Verify (Harness CD)",
-            color: "tangerine",
+            color: "wf",
             content: `
                 <div class="grid md:grid-cols-2 gap-6">
                     <div>
                         <h4 class="font-bold text-slate-800 mb-2">Progressive Delivery</h4>
                         <p class="text-sm text-gray-600 mb-3">
-                            The Mock environment uses a <strong>Blue/Green deployment</strong> strategy on GKE.
+                            The UAT environment uses a <strong>Blue/Green deployment</strong> strategy on Kubernetes.
                             The new version is deployed to a staging service, creating a dedicated environment for automated
                             QA testing, once tests pass, traffic is swapped to the new version automatically.
                         </p>
@@ -459,15 +460,15 @@ curl -X POST \
                             If deviation exceeds the threshold, <strong>automatic rollback</strong> triggers immediately.
                         </p>
                     </div>
-                    <div class="bg-tangerine-50 p-4 rounded-lg border border-tangerine-100">
-                        <h4 class="font-bold text-tangerine-800 mb-2 text-xs uppercase tracking-wide">Deployment Model Flexibility</h4>
-                        <p class="text-sm text-tangerine-900 mb-3">
-                            This pipeline demonstrates traditional Harness CD deployment to GKE. Harness also
+                    <div class="bg-wf-50 p-4 rounded-lg border border-wf-100">
+                        <h4 class="font-bold text-wf-800 mb-2 text-xs uppercase tracking-wide">Deployment Model Flexibility</h4>
+                        <p class="text-sm text-wf-900 mb-3">
+                            This pipeline demonstrates traditional Harness CD deployment to Kubernetes. Harness also
                             natively supports <strong>GitOps with ArgoCD</strong> &mdash; whether your team uses
                             push-based pipelines or pull-based GitOps, the platform accommodates both models
                             with the same governance, verification, and rollback capabilities.
                         </p>
-                        <p class="text-sm text-tangerine-900">
+                        <p class="text-sm text-wf-900">
                             Deployment strategies include <strong>Canary</strong>, <strong>Blue/Green</strong>,
                             <strong>Rolling</strong>, and custom workflows &mdash; each with built-in verification
                             and automated rollback.
@@ -523,7 +524,7 @@ curl -X POST \
     const colorMap = {
         blue:      { border: '#3b82f6', bg: '#eff6ff' },
         rose:      { border: '#f43f5e', bg: '#fff1f2' },
-        tangerine: { border: '#f97316', bg: '#fff7ed' },
+        wf: { border: '#d71e28', bg: '#fdf2f2' },
         purple:    { border: '#a855f7', bg: '#faf5ff' }
     };
 

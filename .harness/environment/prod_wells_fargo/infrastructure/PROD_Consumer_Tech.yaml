@@ -1,13 +1,13 @@
 infrastructureDefinition:
-  name: Prod GKE
-  identifier: Prod_GKE
+  name: PROD Consumer Tech
+  identifier: PROD_Consumer_Tech
   orgIdentifier: sandbox
   projectIdentifier: soto_sandbox
-  environmentRef: Prod_GKE_Tangerine
+  environmentRef: PROD_Wells_Fargo
   deploymentType: Kubernetes
   type: KubernetesDirect
   spec:
     connectorRef: org.se_sandbox_k8s
-    namespace: tangerine-prod
+    namespace: consumer-tech-prod
     releaseName: release-<+INFRA_KEY_SHORT_ID>
   allowSimultaneousDeployments: false

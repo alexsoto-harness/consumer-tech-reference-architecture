@@ -1,6 +1,6 @@
 environment:
-  name: Prod GKE Tangerine
-  identifier: Prod_GKE_Tangerine
+  name: PROD Wells Fargo
+  identifier: PROD_Wells_Fargo
   orgIdentifier: sandbox
   projectIdentifier: soto_sandbox
   type: Production

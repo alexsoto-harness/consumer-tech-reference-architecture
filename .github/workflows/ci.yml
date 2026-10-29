@@ -10,7 +10,7 @@ permissions:
   contents: write
 
 env:
-  PROJECT_NAME: "tangerine-spring-boot-sample"
+  PROJECT_NAME: "consumer-tech-spring-boot-sample"
   DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
   DOCKERHUB_USERNAME: ${{ vars.DOCKERHUB_USERNAME }}
   SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}

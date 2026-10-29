@@ -1,6 +1,6 @@
 pipeline:
-  name: Tangerine Artifact Signature
-  identifier: Tangerine_Artifact_Signature
+  name: Consumer Tech Artifact Signature
+  identifier: Consumer_Tech_Artifact_Signature
   projectIdentifier: soto_sandbox
   orgIdentifier: sandbox
   tags: {}
@@ -71,7 +71,7 @@ pipeline:
       type: String
       description: ""
       required: true
-      value: <+input>.default(alexsotoharness/tangerine-spring-boot-sample)
+      value: <+input>.default(alexsotoharness/consumer-tech-spring-boot-sample)
     - name: tag
       type: String
       description: ""

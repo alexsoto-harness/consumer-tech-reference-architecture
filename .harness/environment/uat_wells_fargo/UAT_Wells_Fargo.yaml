@@ -1,6 +1,6 @@
 environment:
-  name: Mock GKE Tangerine
-  identifier: Mock_GKE_Tangerine
+  name: UAT Wells Fargo
+  identifier: UAT_Wells_Fargo
   orgIdentifier: sandbox
   projectIdentifier: soto_sandbox
   type: PreProduction

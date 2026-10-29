@@ -1,6 +1,6 @@
 pipeline:
-  name: Tangerine Reference Architecture
-  identifier: tang
+  name: Consumer Tech Reference Architecture
+  identifier: consumer_tech_ra
   projectIdentifier: soto_sandbox
   orgIdentifier: sandbox
   tags: {}
@@ -538,19 +538,19 @@ pipeline:
                   timeout: 10m
         tags: {}
     - stage:
-        name: Deploy to Mock
-        identifier: Deploy_to_Mock
+        name: Deploy to UAT
+        identifier: Deploy_to_UAT
         description: ""
         type: Deployment
         spec:
           deploymentType: Kubernetes
           service:
-            serviceRef: Tangerine_Sample
+            serviceRef: Consumer_Tech_Sample
           environment:
-            environmentRef: Mock_GKE_Tangerine
+            environmentRef: UAT_Wells_Fargo
             deployToAll: false
             infrastructureDefinitions:
-              - identifier: Mock_GKE
+              - identifier: UAT_Consumer_Tech
           execution:
             steps:
               - stepGroup:
@@ -611,37 +611,37 @@ pipeline:
                                 h1. 🧪 QA Test Results Report
                                  
                                 h2. 🔬 Selenium Regression Testing
-                                *Status:* <+pipeline.stages.Deploy_to_Mock.spec.execution.steps.Blue_Green_Deployment.steps.QA_Testing.steps.Selenium_Regression_Testin.output.status>
+                                *Status:* <+pipeline.stages.Deploy_to_UAT.spec.execution.steps.Blue_Green_Deployment.steps.QA_Testing.steps.Selenium_Regression_Testin.output.status>
                                  
                                 h3. Test Summary
                                 ||Metric||Value||
-                                |Test Suite|<+json.select("testSuite", pipeline.stages.Deploy_to_Mock.spec.execution.steps.Blue_Green_Deployment.steps.QA_Testing.steps.Selenium_Regression_Testin.output.httpResponseBody)>|
-                                |Test Class|<+json.select("testClass", pipeline.stages.Deploy_to_Mock.spec.execution.steps.Blue_Green_Deployment.steps.QA_Testing.steps.Selenium_Regression_Testin.output.httpResponseBody)>|
-                                |Total Tests|<+json.select("testSummaryReport.totalTests", pipeline.stages.Deploy_to_Mock.spec.execution.steps.Blue_Green_Deployment.steps.QA_Testing.steps.Selenium_Regression_Testin.output.httpResponseBody)>|
-                                |Passed|<+json.select("testSummaryReport.passed", pipeline.stages.Deploy_to_Mock.spec.execution.steps.Blue_Green_Deployment.steps.QA_Testing.steps.Selenium_Regression_Testin.output.httpResponseBody)>|
-                                |Failed|<+json.select("testSummaryReport.failed", pipeline.stages.Deploy_to_Mock.spec.execution.steps.Blue_Green_Deployment.steps.QA_Testing.steps.Selenium_Regression_Testin.output.httpResponseBody)>|
-                                |Skipped|<+json.select("testSummaryReport.skipped", pipeline.stages.Deploy_to_Mock.spec.execution.steps.Blue_Green_Deployment.steps.QA_Testing.steps.Selenium_Regression_Testin.output.httpResponseBody)>|
-                                |Duration (sec)|<+json.select("testSummaryReport.totalDurationSeconds", pipeline.stages.Deploy_to_Mock.spec.execution.steps.Blue_Green_Deployment.steps.QA_Testing.steps.Selenium_Regression_Testin.output.httpResponseBody)>|
-                                |Success Rate|<+json.select("testSummaryReport.successRatePercent", pipeline.stages.Deploy_to_Mock.spec.execution.steps.Blue_Green_Deployment.steps.QA_Testing.steps.Selenium_Regression_Testin.output.httpResponseBody)>%|
+                                |Test Suite|<+json.select("testSuite", pipeline.stages.Deploy_to_UAT.spec.execution.steps.Blue_Green_Deployment.steps.QA_Testing.steps.Selenium_Regression_Testin.output.httpResponseBody)>|
+                                |Test Class|<+json.select("testClass", pipeline.stages.Deploy_to_UAT.spec.execution.steps.Blue_Green_Deployment.steps.QA_Testing.steps.Selenium_Regression_Testin.output.httpResponseBody)>|
+                                |Total Tests|<+json.select("testSummaryReport.totalTests", pipeline.stages.Deploy_to_UAT.spec.execution.steps.Blue_Green_Deployment.steps.QA_Testing.steps.Selenium_Regression_Testin.output.httpResponseBody)>|
+                                |Passed|<+json.select("testSummaryReport.passed", pipeline.stages.Deploy_to_UAT.spec.execution.steps.Blue_Green_Deployment.steps.QA_Testing.steps.Selenium_Regression_Testin.output.httpResponseBody)>|
+                                |Failed|<+json.select("testSummaryReport.failed", pipeline.stages.Deploy_to_UAT.spec.execution.steps.Blue_Green_Deployment.steps.QA_Testing.steps.Selenium_Regression_Testin.output.httpResponseBody)>|
+                                |Skipped|<+json.select("testSummaryReport.skipped", pipeline.stages.Deploy_to_UAT.spec.execution.steps.Blue_Green_Deployment.steps.QA_Testing.steps.Selenium_Regression_Testin.output.httpResponseBody)>|
+                                |Duration (sec)|<+json.select("testSummaryReport.totalDurationSeconds", pipeline.stages.Deploy_to_UAT.spec.execution.steps.Blue_Green_Deployment.steps.QA_Testing.steps.Selenium_Regression_Testin.output.httpResponseBody)>|
+                                |Success Rate|<+json.select("testSummaryReport.successRatePercent", pipeline.stages.Deploy_to_UAT.spec.execution.steps.Blue_Green_Deployment.steps.QA_Testing.steps.Selenium_Regression_Testin.output.httpResponseBody)>%|
                                  
                                 h3. Test Environment
                                 ||Component||Version||
-                                |WebDriver|<+json.select("testEnvironmentDetails.webDriver", pipeline.stages.Deploy_to_Mock.spec.execution.steps.Blue_Green_Deployment.steps.QA_Testing.steps.Selenium_Regression_Testin.output.httpResponseBody)>|
-                                |Operating System|<+json.select("testEnvironmentDetails.operatingSystem", pipeline.stages.Deploy_to_Mock.spec.execution.steps.Blue_Green_Deployment.steps.QA_Testing.steps.Selenium_Regression_Testin.output.httpResponseBody)>|
-                                |Test Framework|<+json.select("testEnvironmentDetails.testFramework", pipeline.stages.Deploy_to_Mock.spec.execution.steps.Blue_Green_Deployment.steps.QA_Testing.steps.Selenium_Regression_Testin.output.httpResponseBody)>|
-                                |Language|<+json.select("testEnvironmentDetails.programmingLanguage", pipeline.stages.Deploy_to_Mock.spec.execution.steps.Blue_Green_Deployment.steps.QA_Testing.steps.Selenium_Regression_Testin.output.httpResponseBody)>|
-                                |Build Tool|<+json.select("testEnvironmentDetails.buildTool", pipeline.stages.Deploy_to_Mock.spec.execution.steps.Blue_Green_Deployment.steps.QA_Testing.steps.Selenium_Regression_Testin.output.httpResponseBody)>|
-                                |Test Runner|<+json.select("testEnvironmentDetails.testRunner", pipeline.stages.Deploy_to_Mock.spec.execution.steps.Blue_Green_Deployment.steps.QA_Testing.steps.Selenium_Regression_Testin.output.httpResponseBody)>|
-                                |Reporting|<+json.select("testEnvironmentDetails.reporting", pipeline.stages.Deploy_to_Mock.spec.execution.steps.Blue_Green_Deployment.steps.QA_Testing.steps.Selenium_Regression_Testin.output.httpResponseBody)>|
+                                |WebDriver|<+json.select("testEnvironmentDetails.webDriver", pipeline.stages.Deploy_to_UAT.spec.execution.steps.Blue_Green_Deployment.steps.QA_Testing.steps.Selenium_Regression_Testin.output.httpResponseBody)>|
+                                |Operating System|<+json.select("testEnvironmentDetails.operatingSystem", pipeline.stages.Deploy_to_UAT.spec.execution.steps.Blue_Green_Deployment.steps.QA_Testing.steps.Selenium_Regression_Testin.output.httpResponseBody)>|
+                                |Test Framework|<+json.select("testEnvironmentDetails.testFramework", pipeline.stages.Deploy_to_UAT.spec.execution.steps.Blue_Green_Deployment.steps.QA_Testing.steps.Selenium_Regression_Testin.output.httpResponseBody)>|
+                                |Language|<+json.select("testEnvironmentDetails.programmingLanguage", pipeline.stages.Deploy_to_UAT.spec.execution.steps.Blue_Green_Deployment.steps.QA_Testing.steps.Selenium_Regression_Testin.output.httpResponseBody)>|
+                                |Build Tool|<+json.select("testEnvironmentDetails.buildTool", pipeline.stages.Deploy_to_UAT.spec.execution.steps.Blue_Green_Deployment.steps.QA_Testing.steps.Selenium_Regression_Testin.output.httpResponseBody)>|
+                                |Test Runner|<+json.select("testEnvironmentDetails.testRunner", pipeline.stages.Deploy_to_UAT.spec.execution.steps.Blue_Green_Deployment.steps.QA_Testing.steps.Selenium_Regression_Testin.output.httpResponseBody)>|
+                                |Reporting|<+json.select("testEnvironmentDetails.reporting", pipeline.stages.Deploy_to_UAT.spec.execution.steps.Blue_Green_Deployment.steps.QA_Testing.steps.Selenium_Regression_Testin.output.httpResponseBody)>|
                                  
                                 ----
                                  
                                 h2. 🎭 Playwright Functional Testing
-                                *Status:* <+pipeline.stages.Deploy_to_Mock.spec.execution.steps.Blue_Green_Deployment.steps.QA_Testing.steps.Playwright_Functional_Testing.output.status>
+                                *Status:* <+pipeline.stages.Deploy_to_UAT.spec.execution.steps.Blue_Green_Deployment.steps.QA_Testing.steps.Playwright_Functional_Testing.output.status>
                                  
                                 h3. Test Output
                                 {code}
-                                <+pipeline.stages.Deploy_to_Mock.spec.execution.steps.Blue_Green_Deployment.steps.QA_Testing.steps.Playwright_Functional_Testing.output.httpResponseBody>
+                                <+pipeline.stages.Deploy_to_UAT.spec.execution.steps.Blue_Green_Deployment.steps.QA_Testing.steps.Playwright_Functional_Testing.output.httpResponseBody>
                                 {code}
                                  
                                 ----
@@ -719,11 +719,11 @@ pipeline:
                     fields:
                       - name: description
                         value: |-
-                          Change Summary: Request for promotion of <+pipeline.stages.Deploy_to_Mock.spec.service.name> to Production 
+                          Change Summary: Request for promotion of <+pipeline.stages.Deploy_to_UAT.spec.service.name> to Production 
                           Artifact: <+pipeline.variables.image_name>:<+pipeline.variables.image_tag> 
                       - name: short_description
                         value: |
-                          Request promotion from Mock to Production for <+pipeline.stages.Deploy_to_Mock.spec.service.name>
+                          Request promotion from UAT to Production for <+pipeline.stages.Deploy_to_UAT.spec.service.name>
                       - name: state
                         value: "-2"
                       - name: requested_by
@@ -763,12 +763,12 @@ pipeline:
         spec:
           deploymentType: Kubernetes
           service:
-            serviceRef: Tangerine_Sample
+            serviceRef: Consumer_Tech_Sample
           environment:
-            environmentRef: Prod_GKE_Tangerine
+            environmentRef: PROD_Wells_Fargo
             deployToAll: false
             infrastructureDefinitions:
-              - identifier: Prod_GKE
+              - identifier: PROD_Consumer_Tech
           execution:
             steps:
               - stepGroup:
@@ -846,7 +846,7 @@ pipeline:
                                 NAMESPACE="<+infra.namespace>"
                                 TIMEOUT=300
 
-                                echo "Waiting for GKE LoadBalancer IP for: ${SERVICE_NAME} in namespace: ${NAMESPACE}"
+                                echo "Waiting for LoadBalancer IP for: ${SERVICE_NAME} in namespace: ${NAMESPACE}"
                                   
                                 START_TIME=$(date +%s)
                                 EXTERNAL_IP=""
@@ -1094,7 +1094,7 @@ pipeline:
       type: String
       description: ""
       required: true
-      value: <+input>.default(tangerine)
+      value: <+input>.default(consumer-tech-reference-architecture)
     - name: branch
       type: String
       description: ""
@@ -1104,7 +1104,7 @@ pipeline:
       type: String
       description: Docker image name
       required: true
-      value: <+input>.default(alexsotoharness/tangerine-spring-boot-sample)
+      value: <+input>.default(alexsotoharness/consumer-tech-spring-boot-sample)
     - name: image_tag
       type: String
       description: Docker image tag
@@ -1114,7 +1114,7 @@ pipeline:
       type: String
       description: ""
       required: true
-      value: <+input>.default(alexsoto-harness/tangerine)
+      value: <+input>.default(alexsoto-harness/consumer-tech-reference-architecture)
   properties:
     ci:
       codebase:
