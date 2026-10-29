@@ -9,7 +9,7 @@ inputSet:
     variables:
       - name: image
         type: String
-        value: <+trigger.image_name>
+        value: <+trigger.payload.image_name>
       - name: tag
         type: String
-        value: <+trigger.image_tag>
+        value: <+trigger.payload.image_tag>
