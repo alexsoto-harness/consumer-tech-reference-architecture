@@ -1,4 +1,4 @@
-image: <+artifact.image>
+image: index.docker.io/<+artifact.imagePath>@<+artifact.metadata.SHAV2>
 #imagePullSecretName: har-pull-secret
 #dockercfg: <+artifacts.primary.imagePullSecret> 
 name: <+service.name.replace("_", "-").replace(" ", "-")>
