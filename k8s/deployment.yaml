@@ -34,4 +34,4 @@ spec:
         - name: {{ lower .Values.name }}
           image: {{ .Values.image }}
           ports:
-            - containerPort: 8080
+            - containerPort: 8080# Consumer Tech Sample - DevOps 2.0
