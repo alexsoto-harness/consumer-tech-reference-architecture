@@ -51,7 +51,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "docker.io/alexsotoharness/consumer-tech-spring-boot-sample_7637c3b/alexsotoharness/consumer-tech-spring-boot-sample"
+                  "uri": "docker.io/alexsotoharness/consumer-tech-spring-boot-sample_d31f177/alexsotoharness/consumer-tech-spring-boot-sample"
                 },
                 "region": {
                   "startLine": 1
@@ -72,7 +72,7 @@
               "artifactChanges": [
                 {
                   "artifactLocation": {
-                    "uri": "docker.io/alexsotoharness/consumer-tech-spring-boot-sample_7637c3b/alexsotoharness/consumer-tech-spring-boot-sample"
+                    "uri": "docker.io/alexsotoharness/consumer-tech-spring-boot-sample_d31f177/alexsotoharness/consumer-tech-spring-boot-sample"
                   },
                   "replacements": [
                     {
@@ -91,7 +91,7 @@
         }
       ],
       "automationDetails": {
-        "id": "Snyk/Container/docker-image|docker.io/alexsotoharness/consumer-tech-spring-boot-sample/0/2026-10-29T11:20:10.563Z"
+        "id": "Snyk/Container/docker-image|docker.io/alexsotoharness/consumer-tech-spring-boot-sample/0/2026-10-29T11:53:08.748Z"
       }
     },
     {
@@ -9750,7 +9750,7 @@
         }
       ],
       "automationDetails": {
-        "id": "Snyk/Container/docker.io/alexsotoharness/consumer-tech-spring-boot-sample:7637c3b://1/2026-10-29T11:20:10.564Z"
+        "id": "Snyk/Container/docker.io/alexsotoharness/consumer-tech-spring-boot-sample:d31f177://1/2026-10-29T11:53:08.749Z"
       }
     },
     {
@@ -9768,7 +9768,7 @@
       },
       "results": [],
       "automationDetails": {
-        "id": "Snyk/Container/docker.io/alexsotoharness/consumer-tech-spring-boot-sample:7637c3b:/opt/java/openjdk/lib/2/2026-10-29T11:20:10.564Z"
+        "id": "Snyk/Container/docker.io/alexsotoharness/consumer-tech-spring-boot-sample:d31f177:/opt/java/openjdk/lib/2/2026-10-29T11:53:08.749Z"
       }
     }
   ]
