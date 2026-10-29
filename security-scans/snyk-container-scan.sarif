@@ -6,26 +6,100 @@
       "tool": {
         "driver": {
           "name": "Snyk Container",
-          "semanticVersion": "1.1308.2",
-          "version": "1.1308.2",
+          "semanticVersion": "1.1308.3",
+          "version": "1.1308.3",
           "informationUri": "https://docs.snyk.io/",
           "properties": {
             "artifactsScanned": 77
           },
-          "rules": []
+          "rules": [
+            {
+              "id": "SNYK-ALPINE324-BROTLI-21483816",
+              "shortDescription": {
+                "text": "Critical severity - CVE-2026-111497 vulnerability in brotli"
+              },
+              "fullDescription": {
+                "text": "(CVE-2026-111497) brotli/brotli-libs@1.2.0-r1"
+              },
+              "help": {
+                "text": "",
+                "markdown": "## NVD Description\n**_Note:_** _Versions mentioned in the description apply only to the upstream `brotli` package and not the `brotli` package as distributed by `Alpine`._\n_See `How to fix?` for `Alpine:3.24` relevant fixed versions and status._\n\nA buffer overflow vulnerability in the Brotli decoder (c/dec/decode.c) in Google Brotli versions 1.0.3 through 1.2.0 on all platforms allows a remote unauthenticated attacker to corrupt adjacent decoder state memory, disclose sensitive memory contents, cause a denial of service, or potentially execute arbitrary code using a crafted Brotli-compressed stream.\n\n\n\n\n\nUsers need to update any Brotli libraries or binaries between 1.0.3 through 1.2.0 to the latest available version: 1.0.10 or 1.1.1 or 1.2.1.\n## Remediation\nUpgrade `Alpine:3.24` `brotli` to version 1.2.1-r0 or higher.\n## References\n- [https://github.com/andybalholm/brotli/releases/tag/v1.2.7](https://github.com/andybalholm/brotli/releases/tag/v1.2.7)\n- [https://nodejs.org/en/blog/vulnerability/october-2026-security-releases#nodejs-brotli-decoder-out-of-bounds-write-permits-remote-code-execution-cve-2026-111497---high](https://nodejs.org/en/blog/vulnerability/october-2026-security-releases#nodejs-brotli-decoder-out-of-bounds-write-permits-remote-code-execution-cve-2026-111497---high)\n- [http://www.openwall.com/lists/oss-security/2026/10/23/25](http://www.openwall.com/lists/oss-security/2026/10/23/25)\n- [http://www.openwall.com/lists/oss-security/2026/10/24/6](http://www.openwall.com/lists/oss-security/2026/10/24/6)\n- [http://www.openwall.com/lists/oss-security/2026/10/26/12](http://www.openwall.com/lists/oss-security/2026/10/26/12)\n- [http://www.openwall.com/lists/oss-security/2026/10/26/13](http://www.openwall.com/lists/oss-security/2026/10/26/13)\n- [http://www.openwall.com/lists/oss-security/2026/10/26/16](http://www.openwall.com/lists/oss-security/2026/10/26/16)\n- [https://broccoli2shell.com](https://broccoli2shell.com)\n- [https://github.com/advisories/GHSA-9v8h-qqgm-4m35](https://github.com/advisories/GHSA-9v8h-qqgm-4m35)\n- [https://github.com/dotnet/announcements/issues/494](https://github.com/dotnet/announcements/issues/494)\n- [https://github.com/google/brotli/releases/tag/v1.0.10](https://github.com/google/brotli/releases/tag/v1.0.10)\n- [https://github.com/google/brotli/releases/tag/v1.1.1](https://github.com/google/brotli/releases/tag/v1.1.1)\n- [https://github.com/google/brotli/releases/tag/v1.2.1](https://github.com/google/brotli/releases/tag/v1.2.1)\n- [https://lists.debian.org/debian-lts-announce/2026/10/msg00049.html](https://lists.debian.org/debian-lts-announce/2026/10/msg00049.html)\n- [https://patchtheplanet.org/brotli](https://patchtheplanet.org/brotli)\n- [https://www.aikido.dev/blog/node2shell-nodejs-brotli-rce-cve-2026-111497](https://www.aikido.dev/blog/node2shell-nodejs-brotli-rce-cve-2026-111497)\n- [https://ellio.tech/en/blog/node2shell-cve-2026-111497-rce-on-stock-nodejs-builds/](https://ellio.tech/en/blog/node2shell-cve-2026-111497-rce-on-stock-nodejs-builds/)\n- [https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-111497](https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2026-111497)\n- [https://github.com/assetnote/node2shell-scanner](https://github.com/assetnote/node2shell-scanner)\n- [https://github.com/projectdiscovery/nuclei-templates/blob/main/http/javascript/cves/2026/CVE-2026-111497.yaml](https://github.com/projectdiscovery/nuclei-templates/blob/main/http/javascript/cves/2026/CVE-2026-111497.yaml)\n- [https://www.cisa.gov/known-exploited-vulnerabilities-catalog](https://www.cisa.gov/known-exploited-vulnerabilities-catalog)\n"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "apk"
+                ],
+                "cvssv3_baseScore": 9.8,
+                "security-severity": "9.8"
+              }
+            }
+          ]
         }
       },
-      "results": [],
+      "results": [
+        {
+          "ruleId": "SNYK-ALPINE324-BROTLI-21483816",
+          "level": "error",
+          "message": {
+            "text": "This file introduces a vulnerable brotli package with a critical severity vulnerability."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "docker.io/alexsotoharness/consumer-tech-spring-boot-sample_7637c3b/alexsotoharness/consumer-tech-spring-boot-sample"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "brotli@1.2.0-r1"
+                }
+              ]
+            }
+          ],
+          "fixes": [
+            {
+              "description": {
+                "text": "Upgrade to brotli/brotli-libs@1.2.1-r0"
+              },
+              "artifactChanges": [
+                {
+                  "artifactLocation": {
+                    "uri": "docker.io/alexsotoharness/consumer-tech-spring-boot-sample_7637c3b/alexsotoharness/consumer-tech-spring-boot-sample"
+                  },
+                  "replacements": [
+                    {
+                      "deletedRegion": {
+                        "startLine": 1
+                      },
+                      "insertedContent": {
+                        "text": "brotli/brotli-libs@1.2.1-r0"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
       "automationDetails": {
-        "id": "Snyk/Container/docker-image|docker.io/alexsotoharness/tangerine-spring-boot-sample/0/2026-10-22T15:40:46.527Z"
+        "id": "Snyk/Container/docker-image|docker.io/alexsotoharness/consumer-tech-spring-boot-sample/0/2026-10-29T11:20:10.563Z"
       }
     },
     {
       "tool": {
         "driver": {
           "name": "Snyk Container",
-          "semanticVersion": "1.1308.2",
-          "version": "1.1308.2",
+          "semanticVersion": "1.1308.3",
+          "version": "1.1308.3",
           "informationUri": "https://docs.snyk.io/",
           "properties": {
             "artifactsScanned": 38
@@ -680,6 +754,31 @@
                 ],
                 "cvssv3_baseScore": 6.9,
                 "security-severity": "6.9"
+              }
+            },
+            {
+              "id": "SNYK-JAVA-COMFASTERXMLJACKSONCORE-21761837",
+              "shortDescription": {
+                "text": "Critical severity - Deserialization of Untrusted Data vulnerability in com.fasterxml.jackson.core:jackson-databind"
+              },
+              "fullDescription": {
+                "text": "(CVE-2026-110879) com.fasterxml.jackson.core:jackson-databind@2.15.4"
+              },
+              "help": {
+                "text": "",
+                "markdown": "## Overview\n[com.fasterxml.jackson.core:jackson-databind](https://github.com/FasterXML/jackson-databind) is a library which contains the general-purpose data-binding functionality and tree-model for Jackson Data Processor.\n\nAffected versions of this package are vulnerable to Deserialization of Untrusted Data in the `_resolveAndValidateGeneric()` and `_validateTypeParameter()` methods of the `DatabindContext` class. An attacker can instantiate arbitrary classes by supplying a class-name type ID whose generic arguments or array element type name a class that is not validated, because only the outer type is checked against the `PolymorphicTypeValidator`. Exploitation requires deserializing untrusted JSON with class-name type IDs, through annotation-based polymorphism or default typing, where the outer base type is approved, and a usable gadget class is on the classpath.\n\n## Workaround\n\nThis vulnerability can be avoided by using narrow subtype rules, preventing attackers from writing serialized cache or session values, or removing unnecessary dependencies that provide gadget classes.\n\n**Note:** This is a bypass of the fix for the vulnerability described in [CVE-2026-54512](https://security.snyk.io/vuln/SNYK-JAVA-COMFASTERXMLJACKSONCORE-17440598).\n\n## Details\n\nSerialization is a process of converting an object into a sequence of bytes which can be persisted to a disk or database or can be sent through streams. The reverse process of creating object from sequence of bytes is called deserialization. Serialization is commonly used for communication (sharing objects between multiple hosts) and persistence (store the object state in a file or a database). It is an integral part of popular protocols like _Remote Method Invocation (RMI)_, _Java Management Extension (JMX)_, _Java Messaging System (JMS)_, _Action Message Format (AMF)_, _Java Server Faces (JSF) ViewState_, etc.\n\n_Deserialization of untrusted data_ ([CWE-502](https://cwe.mitre.org/data/definitions/502.html)) is when the application deserializes untrusted data without sufficiently verifying that the resulting data will be valid, thus allowing the attacker to control the state or the flow of the execution.\n  \n## Remediation\nUpgrade `com.fasterxml.jackson.core:jackson-databind` to version 2.18.12, 2.21.8, 2.22.4 or higher.\n## References\n- [GitHub Advisory](https://github.com/FasterXML/jackson-databind/security/advisories/GHSA-m8xf-2cr7-77ph)\n- [GitHub Commit](https://github.com/FasterXML/jackson-databind/commit/9e7c79ca2731d5c95e3d505110427435c02d9868)\n- [GitHub PR](https://github.com/FasterXML/jackson-databind/pull/6287)\n- [GitHub PR](https://github.com/FasterXML/jackson-databind/pull/6289)\n"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "CWE-502",
+                  "maven"
+                ],
+                "cvssv3_baseScore": 9.3,
+                "security-severity": "9.3"
               }
             },
             {
@@ -1658,6 +1757,158 @@
               }
             },
             {
+              "id": "SNYK-JAVA-ORGAPACHETOMCATEMBED-21707475",
+              "shortDescription": {
+                "text": "Critical severity - Missing Critical Step in Authentication vulnerability in org.apache.tomcat.embed:tomcat-embed-core"
+              },
+              "fullDescription": {
+                "text": "(CVE-2026-101296) org.apache.tomcat.embed:tomcat-embed-core@10.1.20"
+              },
+              "help": {
+                "text": "",
+                "markdown": "## Overview\n[org.apache.tomcat.embed:tomcat-embed-core](https://mvnrepository.com/artifact/org.apache.tomcat.embed/tomcat-embed-core) is a Core Tomcat implementation.\n\nAffected versions of this package are vulnerable to Missing Critical Step in Authentication in the `JNDIRealm` authentication process when configured with a non-GSSAPI SASL mechanism. An attacker can gain unauthorized access by authenticating without providing the correct password.\n## Remediation\nUpgrade `org.apache.tomcat.embed:tomcat-embed-core` to version 11.0.27, 10.1.61, 9.0.123 or higher.\n## References\n- [Apache Security Advisory](https://lists.apache.org/thread.html/bl52b9go9ckoov8x4v3dt6rkm573cygd)\n- [GitHub Commit](https://github.com/apache/tomcat/commit/e43453fc04abb44f64faf571ca98af71aa3c20a1)\n"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "CWE-304",
+                  "maven"
+                ],
+                "cvssv3_baseScore": 9.3,
+                "security-severity": "9.3"
+              }
+            },
+            {
+              "id": "SNYK-JAVA-ORGAPACHETOMCATEMBED-21715432",
+              "shortDescription": {
+                "text": "Low severity - Improper Check for Certificate Revocation vulnerability in org.apache.tomcat.embed:tomcat-embed-core"
+              },
+              "fullDescription": {
+                "text": "(CVE-2026-73581) org.apache.tomcat.embed:tomcat-embed-core@10.1.20"
+              },
+              "help": {
+                "text": "",
+                "markdown": "## Overview\n[org.apache.tomcat.embed:tomcat-embed-core](https://mvnrepository.com/artifact/org.apache.tomcat.embed/tomcat-embed-core) is a Core Tomcat implementation.\n\nAffected versions of this package are vulnerable to Improper Check for Certificate Revocation via the `OpenSSLContext` implementations in its OpenSSL and OpenSSL-FFM TLS components. When OpenSSL trust is used and the server key is held in a Java keystore, these implementations ignore configured CRLs; an attacker can present a revoked client certificate during TLS authentication and be treated as a valid user, gaining access to resources protected by client-certificate authentication.\n## Remediation\nUpgrade `org.apache.tomcat.embed:tomcat-embed-core` to version 9.0.122, 10.1.59, 11.0.26 or higher.\n## References\n- [Apache Security Advisory](https://lists.apache.org/thread/r0dj3h1pbn4wv96fhsfrnz3t6874t6do)\n- [GitHub Commit](https://github.com/apache/tomcat/commit/46394cdbbed2cd8446279f347f1f38d19e27a352)\n- [GitHub Commit 10.1.60](https://github.com/apache/tomcat/commit/6907d47ea2d4c3f13ef9f65b0c51ff2fd485c252)\n- [GitHub Commit 11.0.26](https://github.com/apache/tomcat/commit/15a76156ced9f6a6306ef7d6f2e343034231a2de)\n- [GitHub Commit 9.0.122](https://github.com/apache/tomcat/commit/2dce8f26b3ba6a89c8f172b94fa41a5fa2dcc361)\n"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "CWE-299",
+                  "maven"
+                ],
+                "cvssv3_baseScore": 2.3,
+                "security-severity": "2.3"
+              }
+            },
+            {
+              "id": "SNYK-JAVA-ORGAPACHETOMCATEMBED-21715433",
+              "shortDescription": {
+                "text": "Medium severity - HTTP Request Smuggling vulnerability in org.apache.tomcat.embed:tomcat-embed-core"
+              },
+              "fullDescription": {
+                "text": "(CVE-2026-77756) org.apache.tomcat.embed:tomcat-embed-core@10.1.20"
+              },
+              "help": {
+                "text": "",
+                "markdown": "## Overview\n[org.apache.tomcat.embed:tomcat-embed-core](https://mvnrepository.com/artifact/org.apache.tomcat.embed/tomcat-embed-core) is a Core Tomcat implementation.\n\nAffected versions of this package are vulnerable to HTTP Request Smuggling via the `Http11Processor` in the HTTP/1.x request-processing component. An attacker can cause one request from another user to fail by sending an HTTP/1.0 request with a `Transfer-Encoding` header when Tomcat is behind a reverse proxy that interprets the request differently.\n## Remediation\nUpgrade `org.apache.tomcat.embed:tomcat-embed-core` to version 9.0.122, 10.1.60, 11.0.26 or higher.\n## References\n- [Apache Security Advisory](https://lists.apache.org/thread/bl5b6rxqh3vb2k9bj2794vhor7o6xl3z)\n- [GitHub Commit](https://github.com/apache/tomcat/commit/9c91bba7a4f4270453f70b9f2cadaca5fc992f89)\n- [GitHub Commit 10.1.60](https://github.com/apache/tomcat/commit/bf44bee23d97fbb1a64cbbbb213ff2b6506d26c4)\n- [GitHub Commit 11.0.26](https://github.com/apache/tomcat/commit/1ad63de866a6e7007304ebe5165f72e65ece32b6)\n- [GitHub Commit 9.0.122](https://github.com/apache/tomcat/commit/e590588ab7649c93d49b0eb7b3152700a977880d)\n"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "CWE-444",
+                  "maven"
+                ],
+                "cvssv3_baseScore": 6.3,
+                "security-severity": "6.3"
+              }
+            },
+            {
+              "id": "SNYK-JAVA-ORGAPACHETOMCATEMBED-21715436",
+              "shortDescription": {
+                "text": "High severity - Allocation of Resources Without Limits or Throttling vulnerability in org.apache.tomcat.embed:tomcat-embed-core"
+              },
+              "fullDescription": {
+                "text": "(CVE-2026-78383) org.apache.tomcat.embed:tomcat-embed-core@10.1.20"
+              },
+              "help": {
+                "text": "",
+                "markdown": "## Overview\n[org.apache.tomcat.embed:tomcat-embed-core](https://mvnrepository.com/artifact/org.apache.tomcat.embed/tomcat-embed-core) is a Core Tomcat implementation.\n\nAffected versions of this package are vulnerable to Allocation of Resources Without Limits or Throttling via the `AjpProcessor` in the AJP connector. An unauthenticated attacker can pin an AJP processing thread and cause denial of service by triggering an error response for an AJP request that declares or expects a body but does not provide it; while finishing the response, the processor waits to consume the unread body.\n## Remediation\nUpgrade `org.apache.tomcat.embed:tomcat-embed-core` to version 9.0.122, 10.1.59, 11.0.26 or higher.\n## References\n- [Apache Security Advisory](https://lists.apache.org/thread/tyqcqk99g7ghgk22641vf67vghcyswnw)\n- [GitHub Commit](https://github.com/apache/tomcat/commit/9979b6b5170733ed53de3602a7cfadd35366a63b)\n- [GitHub Commit 10.1.60](https://github.com/apache/tomcat/commit/2ed6d18ebfe4b085ef050dd0a0f4f20aff3bc48d)\n- [GitHub Commit 11.0.26](https://github.com/apache/tomcat/commit/6dabd4303095785183ede57f6d162c542955a5a8)\n- [GitHub Commit 9.0.122](https://github.com/apache/tomcat/commit/265bdc0a58b1447ff5d8f8b96ea81de58cb74c8c)\n"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "CWE-770",
+                  "maven"
+                ],
+                "cvssv3_baseScore": 8.7,
+                "security-severity": "8.7"
+              }
+            },
+            {
+              "id": "SNYK-JAVA-ORGAPACHETOMCATEMBED-21716513",
+              "shortDescription": {
+                "text": "Medium severity - Incorrect Synchronization vulnerability in org.apache.tomcat.embed:tomcat-embed-core"
+              },
+              "fullDescription": {
+                "text": "(CVE-2026-77762) org.apache.tomcat.embed:tomcat-embed-core@10.1.20"
+              },
+              "help": {
+                "text": "",
+                "markdown": "## Overview\n[org.apache.tomcat.embed:tomcat-embed-core](https://mvnrepository.com/artifact/org.apache.tomcat.embed/tomcat-embed-core) is a Core Tomcat implementation.\n\nAffected versions of this package are vulnerable to Incorrect Synchronization via the shared header emitter in the HTTP/2 `HpackDecoder`. An attacker can inject trailer fields into another HTTP/2 request by sending requests that cause a stream to be reset and replaced while headers are being decoded, making the server process the other request with attacker-supplied trailer data.\n\n**Notes**\n\n- At the decoder-to-request handoff, the affected and attacker-controlled streams must be on the same HTTP/2 connection, whose `HpackDecoder` shares the header emitter.\n## Remediation\nUpgrade `org.apache.tomcat.embed:tomcat-embed-core` to version 9.0.122, 10.1.60, 11.0.26 or higher.\n## References\n- [Apache Security Advisory](https://lists.apache.org/thread/y5r9fvjo7ol24mkoyoc0st8bqrfyqcyn)\n- [GitHub Commit](https://github.com/apache/tomcat/commit/5ae8ae4825f16362ae7e4c1af120ac10117ee02b)\n- [GitHub Commit 10.1.60](https://github.com/apache/tomcat/commit/77d2d59347891eced52b0cb5a979fc33a8a2620c)\n- [GitHub Commit 11.0.26](https://github.com/apache/tomcat/commit/fd309997dfd0d351b26959a8afd7bffec33dd0de)\n- [GitHub Commit 9.0.122](https://github.com/apache/tomcat/commit/71f27c2e84810930beda468b5ba732dcd0ef2652)\n"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "CWE-362",
+                  "CWE-821",
+                  "maven"
+                ],
+                "cvssv3_baseScore": 6.3,
+                "security-severity": "6.3"
+              }
+            },
+            {
+              "id": "SNYK-JAVA-ORGAPACHETOMCATEMBED-21716517",
+              "shortDescription": {
+                "text": "Medium severity - Authentication Bypass by Primary Weakness vulnerability in org.apache.tomcat.embed:tomcat-embed-core"
+              },
+              "fullDescription": {
+                "text": "(CVE-2026-75973) org.apache.tomcat.embed:tomcat-embed-core@10.1.20"
+              },
+              "help": {
+                "text": "",
+                "markdown": "## Overview\n[org.apache.tomcat.embed:tomcat-embed-core](https://mvnrepository.com/artifact/org.apache.tomcat.embed/tomcat-embed-core) is a Core Tomcat implementation.\n\nAffected versions of this package are vulnerable to Authentication Bypass by Primary Weakness via the `getServerAuthConfig` method in `SimpleAuthConfigProvider`. When Jakarta Authentication uses this provider as the default for multiple web applications, its cached configuration retains the realm of the first application to authenticate a request. An attacker can send requests to another application and have them authenticated against that first realm, potentially gaining access to resources protected by the other application’s intended authentication.\n## Remediation\nUpgrade `org.apache.tomcat.embed:tomcat-embed-core` to version 9.0.122, 10.1.60, 11.0.26 or higher.\n## References\n- [Apache Security Advisory](https://lists.apache.org/thread/njjcdkkzqyzx4n3ffc4ffjmyh5mpl1gr)\n- [GitHub Commit](https://github.com/apache/tomcat/commit/3a1c06bc349668e52e8f0eca66d4469ff71fae8d)\n- [GitHub Commit 10.1.60](https://github.com/apache/tomcat/commit/f62c65768fdaa300e22e64ffa7b5118dce0571a1)\n- [GitHub Commit 11.0.26](https://github.com/apache/tomcat/commit/2585fc798f24f0b8811fd20ad9b4e8affb6f69a6)\n- [GitHub Commit 9.0.122](https://github.com/apache/tomcat/commit/043115414a39127cad015e9d285296e59c18bb41)\n"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "CWE-287",
+                  "CWE-305",
+                  "maven"
+                ],
+                "cvssv3_baseScore": 6.3,
+                "security-severity": "6.3"
+              }
+            },
+            {
               "id": "SNYK-JAVA-ORGAPACHETOMCATEMBED-7430175",
               "shortDescription": {
                 "text": "High severity - Insufficient Session Expiration vulnerability in org.apache.tomcat.embed:tomcat-embed-core"
@@ -1980,6 +2231,31 @@
                 ],
                 "cvssv3_baseScore": 8.7,
                 "security-severity": "8.7"
+              }
+            },
+            {
+              "id": "SNYK-JAVA-ORGAPACHETOMCATEMBED-21715428",
+              "shortDescription": {
+                "text": "Medium severity - Improper Handling of Length Parameter Inconsistency vulnerability in org.apache.tomcat.embed:tomcat-embed-websocket"
+              },
+              "fullDescription": {
+                "text": "(CVE-2026-87022) org.apache.tomcat.embed:tomcat-embed-websocket@10.1.20"
+              },
+              "help": {
+                "text": "",
+                "markdown": "## Overview\n\nAffected versions of this package are vulnerable to Improper Handling of Length Parameter Inconsistency via the `getMoreData` method in the `PerMessageDeflate` transformation. An attacker can send a per-message-deflate payload containing multiple DEFLATE blocks where a block sets `BFINAL` before later blocks; Tomcat may end processing while compressed bytes remain, causing message data to be ignored and allowing message contents to be smuggled. This affects WebSocket connections using per-message-deflate.\n## Remediation\nUpgrade `org.apache.tomcat.embed:tomcat-embed-websocket` to version 9.0.122, 10.1.60, 11.0.26 or higher.\n## References\n- [Apache Mailing List](https://lists.apache.org/thread/ypvlkjqsq0480fnk9jm6h9qllddwlw4w)\n- [GitHub Commit](https://github.com/apache/tomcat/commit/0697b66bd823daa23e91c3e3c63fc4765cebc66d)\n- [GitHub Commit 10.1.60](https://github.com/apache/tomcat/commit/567a85515b78d1cd6410a89844b88109fcc2306f)\n- [GitHub Commit 11.0.26](https://github.com/apache/tomcat/commit/4fef25fe2ab7509e697af093280b9daadb515615)\n- [GitHub Commit 9.0.122](https://github.com/apache/tomcat/commit/959a52a227cc35101b92dae35b722546167594d6)\n"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "CWE-130",
+                  "maven"
+                ],
+                "cvssv3_baseScore": 6.9,
+                "security-severity": "6.9"
               }
             },
             {
@@ -4385,6 +4661,54 @@
           ]
         },
         {
+          "ruleId": "SNYK-JAVA-COMFASTERXMLJACKSONCORE-21761837",
+          "level": "error",
+          "message": {
+            "text": "This file introduces a vulnerable com.fasterxml.jackson.core:jackson-databind package with a critical severity vulnerability."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "com.fasterxml.jackson.core:jackson-databind@2.15.4"
+                }
+              ]
+            }
+          ],
+          "fixes": [
+            {
+              "description": {
+                "text": "Upgrade to com.fasterxml.jackson.core:jackson-databind@2.18.12"
+              },
+              "artifactChanges": [
+                {
+                  "artifactLocation": {
+                    "uri": "/"
+                  },
+                  "replacements": [
+                    {
+                      "deletedRegion": {
+                        "startLine": 1
+                      },
+                      "insertedContent": {
+                        "text": "com.fasterxml.jackson.core:jackson-databind@2.18.12"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
           "ruleId": "SNYK-JAVA-IOMICROMETER-17260885",
           "level": "error",
           "message": {
@@ -6257,6 +6581,294 @@
           ]
         },
         {
+          "ruleId": "SNYK-JAVA-ORGAPACHETOMCATEMBED-21707475",
+          "level": "error",
+          "message": {
+            "text": "This file introduces a vulnerable org.apache.tomcat.embed:tomcat-embed-core package with a critical severity vulnerability."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "org.apache.tomcat.embed:tomcat-embed-core@10.1.20"
+                }
+              ]
+            }
+          ],
+          "fixes": [
+            {
+              "description": {
+                "text": "Upgrade to org.apache.tomcat.embed:tomcat-embed-core@10.1.61"
+              },
+              "artifactChanges": [
+                {
+                  "artifactLocation": {
+                    "uri": "/"
+                  },
+                  "replacements": [
+                    {
+                      "deletedRegion": {
+                        "startLine": 1
+                      },
+                      "insertedContent": {
+                        "text": "org.apache.tomcat.embed:tomcat-embed-core@10.1.61"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-JAVA-ORGAPACHETOMCATEMBED-21715432",
+          "level": "note",
+          "message": {
+            "text": "This file introduces a vulnerable org.apache.tomcat.embed:tomcat-embed-core package with a low severity vulnerability."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "org.apache.tomcat.embed:tomcat-embed-core@10.1.20"
+                }
+              ]
+            }
+          ],
+          "fixes": [
+            {
+              "description": {
+                "text": "Upgrade to org.apache.tomcat.embed:tomcat-embed-core@10.1.59"
+              },
+              "artifactChanges": [
+                {
+                  "artifactLocation": {
+                    "uri": "/"
+                  },
+                  "replacements": [
+                    {
+                      "deletedRegion": {
+                        "startLine": 1
+                      },
+                      "insertedContent": {
+                        "text": "org.apache.tomcat.embed:tomcat-embed-core@10.1.59"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-JAVA-ORGAPACHETOMCATEMBED-21715433",
+          "level": "warning",
+          "message": {
+            "text": "This file introduces a vulnerable org.apache.tomcat.embed:tomcat-embed-core package with a medium severity vulnerability."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "org.apache.tomcat.embed:tomcat-embed-core@10.1.20"
+                }
+              ]
+            }
+          ],
+          "fixes": [
+            {
+              "description": {
+                "text": "Upgrade to org.apache.tomcat.embed:tomcat-embed-core@10.1.60"
+              },
+              "artifactChanges": [
+                {
+                  "artifactLocation": {
+                    "uri": "/"
+                  },
+                  "replacements": [
+                    {
+                      "deletedRegion": {
+                        "startLine": 1
+                      },
+                      "insertedContent": {
+                        "text": "org.apache.tomcat.embed:tomcat-embed-core@10.1.60"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-JAVA-ORGAPACHETOMCATEMBED-21715436",
+          "level": "error",
+          "message": {
+            "text": "This file introduces a vulnerable org.apache.tomcat.embed:tomcat-embed-core package with a high severity vulnerability."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "org.apache.tomcat.embed:tomcat-embed-core@10.1.20"
+                }
+              ]
+            }
+          ],
+          "fixes": [
+            {
+              "description": {
+                "text": "Upgrade to org.apache.tomcat.embed:tomcat-embed-core@10.1.59"
+              },
+              "artifactChanges": [
+                {
+                  "artifactLocation": {
+                    "uri": "/"
+                  },
+                  "replacements": [
+                    {
+                      "deletedRegion": {
+                        "startLine": 1
+                      },
+                      "insertedContent": {
+                        "text": "org.apache.tomcat.embed:tomcat-embed-core@10.1.59"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-JAVA-ORGAPACHETOMCATEMBED-21716513",
+          "level": "warning",
+          "message": {
+            "text": "This file introduces a vulnerable org.apache.tomcat.embed:tomcat-embed-core package with a medium severity vulnerability."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "org.apache.tomcat.embed:tomcat-embed-core@10.1.20"
+                }
+              ]
+            }
+          ],
+          "fixes": [
+            {
+              "description": {
+                "text": "Upgrade to org.apache.tomcat.embed:tomcat-embed-core@10.1.60"
+              },
+              "artifactChanges": [
+                {
+                  "artifactLocation": {
+                    "uri": "/"
+                  },
+                  "replacements": [
+                    {
+                      "deletedRegion": {
+                        "startLine": 1
+                      },
+                      "insertedContent": {
+                        "text": "org.apache.tomcat.embed:tomcat-embed-core@10.1.60"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-JAVA-ORGAPACHETOMCATEMBED-21716517",
+          "level": "warning",
+          "message": {
+            "text": "This file introduces a vulnerable org.apache.tomcat.embed:tomcat-embed-core package with a medium severity vulnerability."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "org.apache.tomcat.embed:tomcat-embed-core@10.1.20"
+                }
+              ]
+            }
+          ],
+          "fixes": [
+            {
+              "description": {
+                "text": "Upgrade to org.apache.tomcat.embed:tomcat-embed-core@10.1.60"
+              },
+              "artifactChanges": [
+                {
+                  "artifactLocation": {
+                    "uri": "/"
+                  },
+                  "replacements": [
+                    {
+                      "deletedRegion": {
+                        "startLine": 1
+                      },
+                      "insertedContent": {
+                        "text": "org.apache.tomcat.embed:tomcat-embed-core@10.1.60"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
           "ruleId": "SNYK-JAVA-ORGAPACHETOMCATEMBED-7430175",
           "level": "error",
           "message": {
@@ -6872,6 +7484,54 @@
                       },
                       "insertedContent": {
                         "text": "org.apache.tomcat.embed:tomcat-embed-websocket@10.1.59"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "SNYK-JAVA-ORGAPACHETOMCATEMBED-21715428",
+          "level": "warning",
+          "message": {
+            "text": "This file introduces a vulnerable org.apache.tomcat.embed:tomcat-embed-websocket package with a medium severity vulnerability."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "org.apache.tomcat.embed:tomcat-embed-websocket@10.1.20"
+                }
+              ]
+            }
+          ],
+          "fixes": [
+            {
+              "description": {
+                "text": "Upgrade to org.apache.tomcat.embed:tomcat-embed-websocket@10.1.60"
+              },
+              "artifactChanges": [
+                {
+                  "artifactLocation": {
+                    "uri": "/"
+                  },
+                  "replacements": [
+                    {
+                      "deletedRegion": {
+                        "startLine": 1
+                      },
+                      "insertedContent": {
+                        "text": "org.apache.tomcat.embed:tomcat-embed-websocket@10.1.60"
                       }
                     }
                   ]
@@ -9090,15 +9750,15 @@
         }
       ],
       "automationDetails": {
-        "id": "Snyk/Container/docker.io/alexsotoharness/tangerine-spring-boot-sample:f6a9fcd://1/2026-10-22T15:40:46.529Z"
+        "id": "Snyk/Container/docker.io/alexsotoharness/consumer-tech-spring-boot-sample:7637c3b://1/2026-10-29T11:20:10.564Z"
       }
     },
     {
       "tool": {
         "driver": {
           "name": "Snyk Container",
-          "semanticVersion": "1.1308.2",
-          "version": "1.1308.2",
+          "semanticVersion": "1.1308.3",
+          "version": "1.1308.3",
           "informationUri": "https://docs.snyk.io/",
           "properties": {
             "artifactsScanned": 0
@@ -9108,7 +9768,7 @@
       },
       "results": [],
       "automationDetails": {
-        "id": "Snyk/Container/docker.io/alexsotoharness/tangerine-spring-boot-sample:f6a9fcd:/opt/java/openjdk/lib/2/2026-10-22T15:40:46.529Z"
+        "id": "Snyk/Container/docker.io/alexsotoharness/consumer-tech-spring-boot-sample:7637c3b:/opt/java/openjdk/lib/2/2026-10-29T11:20:10.564Z"
       }
     }
   ]
